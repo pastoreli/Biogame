@@ -1,0 +1,103 @@
+package br.com.etecGuainazes.BioGame.View;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.util.Random;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
+
+import br.com.etecGuainazes.BioGame.Controller.LogicaMemoria;
+
+public class Sintomas extends JPanel{
+
+	LogicaMemoria logica = new LogicaMemoria();
+	
+	static  int w = (int) Toolkit.getDefaultToolkit ().getScreenSize ().getWidth();
+	static int h = (int) Toolkit.getDefaultToolkit ().getScreenSize ().getHeight ();
+	
+	//arrasta
+	private static final long serialVersionUID = 1L; 
+    private int x;  
+    private int y; 
+    
+    JLabel div;
+    
+    JButton sintomasB[];
+    
+    String descSintomas[];
+    int cont[], roleta;
+	
+	public Sintomas(){
+		
+		this.setLayout(null);
+		this.setBounds(w,0,w+2,h-140);
+		this.setBackground(new Color(255,255,255));
+		
+		if(logica.nivel == 2){
+			
+			int centralizar = (this.getWidth()/2) - (((this.getWidth()/100)*15)/2)*5;
+			
+			sintomasB = new JButton[15];
+			descSintomas = new String[]{"Febre alta", "Dores de cabeça", "Dores atraz dos olhos", "Perda de apetite", "Manchas na pele", "Náuseas e vômito", "Tonturas", "Cansaço", "Moleza e dor no corpo", "Dor nos ossos e articulaçoes", "oie", "oie", "oie", "oie", "oie"};
+			cont = new int[15];
+			
+			Random espalhar = new Random();
+			int roda=0;
+			
+			while(roda<sintomasB.length){
+				
+				roleta = espalhar.nextInt(sintomasB.length);
+					
+					if(cont[roleta]==0){
+					
+						cont[roleta] = 1;
+						sintomasB[roda] = new JButton(descSintomas[roleta]);
+						
+						if(roda == 0){
+							sintomasB[roda].setBounds(centralizar, (this.getHeight()/2)+50, (this.getWidth()/100)*15, (this.getHeight()/100)*8);
+						}else if(roda < 5){
+							sintomasB[roda].setBounds(sintomasB[roda-1].getLocation().x+((this.getWidth()/100)*15)+8, (this.getHeight()/2)+50, (this.getWidth()/100)*15, (this.getHeight()/100)*8);
+						}else if(roda == 5){
+							sintomasB[roda].setBounds(centralizar, sintomasB[roda-1].getLocation().y+((this.getHeight()/100)*8)+10, (this.getWidth()/100)*15, (this.getHeight()/100)*8);
+						}else if(roda < 10){
+							sintomasB[roda].setBounds(sintomasB[roda-1].getLocation().x+((this.getWidth()/100)*15)+8, sintomasB[roda-1].getLocation().y, (this.getWidth()/100)*15, (this.getHeight()/100)*8);
+						}else if(roda == 10){
+							sintomasB[roda].setBounds(centralizar, sintomasB[roda-1].getLocation().y+((this.getHeight()/100)*8)+10, (this.getWidth()/100)*15, (this.getHeight()/100)*8);
+						}else{
+							sintomasB[roda].setBounds(sintomasB[roda-1].getLocation().x+((this.getWidth()/100)*15)+8, sintomasB[roda-1].getLocation().y, (this.getWidth()/100)*15, (this.getHeight()/100)*8);
+						}
+						
+						sintomasB[roda].setBackground(new Color(255,255,255));
+						sintomasB[roda].setForeground(new Color(250,171,75));
+						sintomasB[roda].setFont(new Font("Century Gothic",  Font. PLAIN, (sintomasB[0].getWidth()/14)));
+						sintomasB[roda].setBorder(new LineBorder(new Color(250,171,75), 2, true));
+						sintomasB[roda].setHorizontalAlignment(SwingConstants.CENTER);
+						sintomasB[roda].setVerticalAlignment(SwingConstants.CENTER);
+						
+						this.add(sintomasB[roda]);
+					
+					}
+				
+			}
+			
+		}
+		
+		div = new JLabel();
+		div.setOpaque(true);
+		div.setBounds(0,this.getHeight()/2,this.getWidth(),2);
+		div.setBackground(new Color(250,171,75));
+		
+		
+		
+		this.add(div);
+		
+	}
+	
+}

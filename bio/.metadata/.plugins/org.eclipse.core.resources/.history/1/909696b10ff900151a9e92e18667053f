@@ -1,0 +1,22 @@
+package br.com.etecGuainazes.BioGame.View;
+
+import java.awt.Color;
+import java.awt.Toolkit;
+
+import javax.swing.JPanel;
+
+public class PopUp extends JPanel{
+
+	static  int w = (int) Toolkit.getDefaultToolkit ().getScreenSize ().getWidth();
+	static int h = (int) Toolkit.getDefaultToolkit ().getScreenSize ().getHeight ();
+	
+	public PopUp(){
+		
+		this.setLayout(null);
+		this.setBounds(0,(h/2)-150,w,300);
+		this.setBackground(new Color(243,22,38));
+		this.setVisible(false);
+		
+	}
+	
+}

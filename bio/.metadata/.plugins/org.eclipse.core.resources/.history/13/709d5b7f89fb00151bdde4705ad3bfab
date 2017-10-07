@@ -1,0 +1,65 @@
+package br.com.etecGuainazes.BioGame.View;
+
+import java.awt.Color;
+import java.awt.Font;
+
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+
+import br.com.etecGuainazes.BioGame.Controller.Efeitos;
+
+public class Splash extends JFrame{
+
+	JPanel frame = new JPanel();
+	
+	public static JLabel folks, bio, barra, desc;
+	
+	Efeitos efeitos = new Efeitos();
+	
+	public Splash(){
+	
+		this.setLayout(null);
+		this.setSize(500, 500);
+		this.setLocationRelativeTo(null);
+		
+		frame.setLayout(null);
+		frame.setBounds(0, 0, this.getWidth(), this.getHeight());
+		frame.setBackground(new Color(2,74,124));
+		this.add(frame);
+		
+		desc = new JLabel("Folks Softwares");
+		desc.setBounds(50,420,450,20);
+		desc.setBackground(new Color(255,255,255));
+		desc.setForeground(new Color(2,123,208));
+		desc.setFont(new Font("Century Gothic",  Font. PLAIN,  12));
+		desc.setHorizontalAlignment(SwingConstants.LEFT);
+		desc.setVerticalAlignment(SwingConstants.CENTER);
+		frame.add(desc);
+		
+		folks = new JLabel();
+		folks.setBounds(105, 105, 305, 310);
+		folks.setIcon(new ImageIcon("img/folks.png"));
+		frame.add(folks);
+		
+		bio = new JLabel();
+		bio.setBounds(500, 105, 305, 310);
+		bio.setIcon(new ImageIcon("img/bioGame.png"));
+		frame.add(bio);
+		
+		barra = new JLabel();
+		barra.setBounds(0,460, 0, 2);
+		barra.setOpaque(true);
+		frame.add(barra);
+		
+		this.setUndecorated(true);  
+	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    this.setVisible(true);
+		this.setResizable(false);
+		this.setBackground(new Color(2,123,208));
+		
+	}
+	
+}

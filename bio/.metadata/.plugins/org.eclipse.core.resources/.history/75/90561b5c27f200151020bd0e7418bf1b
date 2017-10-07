@@ -1,0 +1,130 @@
+package br.com.etecGuainazes.BioGame.Controller;
+
+import java.awt.Font;
+import java.awt.Image;
+import java.util.Random;
+
+import javax.swing.ImageIcon;
+
+import br.com.etecGuainazes.BioGame.View.ControladorFrame;
+
+public class LogicaMemoria {
+
+	ControladorFrame controle;
+	
+	public static int nivel;
+	
+	public static int numeroB;
+	
+	public static boolean virada = false, iniciou = false;
+	
+	//para o jogo
+	int guardaN;
+	
+	public void start(){
+		
+		switch(nivel){
+		
+			case 1:
+			
+				nivel1();
+				
+			break;
+		
+		}
+		
+	}
+	
+	//nivel1
+	String imgB[] = new String[8];
+	Boolean[] verificaV = {false, false, false, false, false, false, false, false};
+	
+	public void nivel1(){
+		
+		if(iniciou == false){
+			
+			iniciou = true;
+			
+			String[] imgs = {"imgM/1.jpg", "imgM/2.jpg", "imgM/3.jpg", "imgM/4.jpg", "imgM/1.jpg", "imgM/2.jpg", "imgM/3.jpg", "imgM/4.jpg"};
+			
+			Random espalhar = new Random();
+			
+			int roda=0;
+			
+			while(roda<8){
+			
+				int roleta = espalhar.nextInt(7);
+				
+				int valida=0;
+				
+				for(int i=0; i<8; i++){
+				
+					if(i == roda){
+						
+						imgB[i] = imgs[roleta];
+						roda++;
+						break;
+						
+					}
+					
+					if(imgB[i].equals(imgs[roleta])){
+						
+						if(valida < 1){
+							
+							valida++;
+							
+						}else{
+							
+							break;
+							
+						}
+						
+					}
+					
+				}
+				
+			}	
+			
+		}
+		
+		//validação
+		if(virada == false){
+
+			if(verificaV[numeroB] == false){
+			
+				ImageIcon imgCapa = new ImageIcon(imgB[numeroB]);
+				controle.pMemoria.pecas[numeroB].setIcon(new ImageIcon(imgCapa.getImage().getScaledInstance(controle.pMemoria.pecas[numeroB].getWidth(),controle.pMemoria.pecas[numeroB].getHeight(), Image.SCALE_DEFAULT)));
+				virada = true;
+				guardaN = numeroB;
+				verificaV[numeroB] = true;
+			
+			}
+			
+		}else{
+			
+			if(verificaV[numeroB] == false){
+				
+				ImageIcon imgCapa = new ImageIcon(imgB[numeroB]);
+				controle.pMemoria.pecas[numeroB].setIcon(new ImageIcon(imgCapa.getImage().getScaledInstance(controle.pMemoria.pecas[numeroB].getWidth(),controle.pMemoria.pecas[numeroB].getHeight(), Image.SCALE_DEFAULT)));
+				virada = false;
+				
+				if(controle.pMemoria.pecas[numeroB].getIcon() == controle.pMemoria.pecas[guardaN].getIcon()){
+					
+					verificaV[numeroB] = true;
+					
+				}else{
+					
+					ImageIcon imgCapa2 = new ImageIcon("imgM/capa.jpg");
+					controle.pMemoria.pecas[numeroB].setIcon(new ImageIcon(imgCapa.getImage().getScaledInstance(controle.pMemoria.pecas[numeroB].getWidth(),controle.pMemoria.pecas[numeroB].getHeight(), Image.SCALE_DEFAULT)));
+					controle.pMemoria.pecas[guardaN].setIcon(new ImageIcon(imgCapa.getImage().getScaledInstance(controle.pMemoria.pecas[numeroB].getWidth(),controle.pMemoria.pecas[numeroB].getHeight(), Image.SCALE_DEFAULT)));
+					verificaV[guardaN] = true;
+					
+				}
+				
+			}
+			
+		}
+		
+	}
+	
+}

@@ -1,0 +1,144 @@
+package br.com.etecGuainazes.BioGame.View;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
+
+import br.com.etecGuainazes.BioGame.Controller.Efeitos;
+import br.com.etecGuainazes.BioGame.Controller.LogicaMemoria;
+import br.com.etecGuainazes.BioGame.Model.Usuario;
+
+public class JogoMemoria extends JPanel{
+
+	LogicaMemoria logica = new LogicaMemoria();
+	
+	static  int w = (int) Toolkit.getDefaultToolkit ().getScreenSize ().getWidth();
+	static int h = (int) Toolkit.getDefaultToolkit ().getScreenSize ().getHeight ();
+	
+	JLabel cabecalho, nomeUser, estrela, pontuacao;
+	
+	JButton voltar;
+	
+	//jogo
+	
+	JButton pecas[];
+	
+	public JogoMemoria(){
+		
+		this.setLayout(null);
+		
+		cabecalho = new JLabel();
+		cabecalho.setOpaque(true);
+		cabecalho.setBounds(0,0,w,60);
+		cabecalho.setBackground(new Color(230,230,230));
+		cabecalho.setForeground(new Color(250,171,75));
+		cabecalho.setFont(new Font("Century Gothic",  Font. PLAIN,  30));
+		cabecalho.setHorizontalAlignment(SwingConstants.LEFT);
+		cabecalho.setVerticalAlignment(SwingConstants.CENTER);
+		
+		estrela = new JLabel();
+		estrela.setIcon(new ImageIcon("img/estrela.png"));
+		estrela.setBounds((w/2)-25,0,50,60);
+		
+		pontuacao = new JLabel(Home.pontuacao.getText());
+		pontuacao.setBounds((w/2)-20,0,150,60);
+		pontuacao.setBackground(new Color(230,230,230));
+		pontuacao.setForeground(new Color(250,171,75));
+		pontuacao.setFont(new Font("Century Gothic",  Font. PLAIN,  22));
+		pontuacao.setHorizontalAlignment(SwingConstants.CENTER);
+		pontuacao.setVerticalAlignment(SwingConstants.CENTER);
+		
+		voltar = (new JButton());
+		voltar.setBounds(30,0,60,60);
+		voltar.setIcon(new ImageIcon("img/seta.png"));
+		voltar.setContentAreaFilled(false);
+		voltar.setBorder(null);
+		voltar.setBorderPainted(false);
+		voltar.setOpaque(false);
+		voltar.addMouseListener(new MouseAdapter() {
+			 @Override
+			 public void mouseEntered(MouseEvent e) {
+				 
+				 voltar.setIcon(new ImageIcon("img/seta2.png"));
+				 
+			 }
+			 @Override
+			 public void mouseExited(MouseEvent e) {
+				 
+				 voltar.setIcon(new ImageIcon("img/seta.png"));
+				 
+			}
+		});
+		voltar.addActionListener(new ActionListener(){
+
+			public void actionPerformed(ActionEvent e) {
+				
+				Efeitos f = new Efeitos();
+				
+				f.setEntrada(2);
+				f.setSaida(3);
+				f.setEscolhaE(3);
+				
+				f.transicaoReducao(); 
+				
+			}
+					
+		});
+		
+		System.out.println(logica.nivel);
+		
+		if(logica.nivel == 1){
+			
+			int centro = (w-(((w/100)*12)*4))/4;
+			
+			pecas = new JButton [8];
+			
+			for(int i=0; i<pecas.length; i++){
+			
+				pecas[i] = (new JButton());
+				pecas[i].setText(Integer.toString(i++));
+				
+				if(i==0){
+					pecas[i].setBounds(centro,100,(w/100)*12,(w/100)*10);
+				}else if(i<4){
+					pecas[i].setBounds(pecas[i-1].getLocation().x+((w/100)*15)+50,100,(w/100)*12,(w/100)*10);
+				}else if(i==5){
+					pecas[i].setBounds(centro,100+((w/100)*10)+20,(w/100)*12,(w/100)*10);
+				}else if(i>5){
+					pecas[i].setBounds(pecas[i-1].getLocation().x+((w/100)*15)+50,100+((w/100)*10)+20,(w/100)*12,(w/100)*10);
+				}
+				
+				pecas[i].setBackground(new Color(230,230,230));
+				pecas[i].setForeground(new Color(250,171,75));
+				pecas[i].setFont(new Font("Century Gothic",  Font. PLAIN,  18));
+				pecas[i].setBorder(new LineBorder(new Color(250,171,75), 2, true));
+				
+				this.add(pecas[i]);
+			
+			}
+			
+		}
+		
+		this.add(voltar);
+		this.add(estrela);
+		this.add(pontuacao);
+		this.add(cabecalho);
+		
+		this.setBackground(new Color(255,255,255)); 
+		this.setBounds(20,20,w-40,h-80);
+		
+	}
+	
+}

@@ -1,0 +1,97 @@
+package br.com.etecGuainazes.BioGame.Controller;
+
+import java.awt.Font;
+import java.awt.Image;
+import java.util.Random;
+
+import javax.swing.ImageIcon;
+
+import br.com.etecGuainazes.BioGame.View.ControladorFrame;
+
+public class LogicaMemoria {
+
+	ControladorFrame controle;
+	
+	public static int nivel;
+	
+	public static int numeroB;
+	
+	public static boolean virada = false, iniciou = false;
+	
+	
+	public void iniciar(){
+		
+		switch(nivel){
+		
+			case 1:
+			
+				nivel1();
+				
+			break;
+		
+		}
+		
+	}
+	
+	//nivel1
+	String imgB[] = new String[8];
+	
+	public void nivel1(){
+		
+		if(iniciou == false){
+		
+			String[] imgs = {"imgR/1.jpg", "imgR/2.jpg", "imgR/3.jpg", "imgR/4.jpg", "imgR/1.jpg", "imgR/2.jpg", "imgR/3.jpg", "imgR/4.jpg"};
+			
+			Boolean[] verifica = {false, false, false, false, false, false, false, false};
+			
+			Random espalhar = new Random();
+			
+			int roda=0;
+			
+			while(roda<8){
+			
+				int roleta = espalhar.nextInt(7);
+				
+				int valida=0;
+				
+				for(int i=0; i<8; i++){
+				
+					if(i == roda){
+						
+						imgB[i] = imgs[roleta];
+						roda++;
+						break;
+						
+					}
+					
+					if(imgB[i].equals(imgs[roleta])){
+						
+						if(valida != 2){
+							
+							valida++;
+							
+						}else{
+							
+							break;
+							
+						}
+						
+					}
+					
+				}
+			
+			}	
+			
+		}
+		
+		//validação
+		if(virada == false){
+			
+			ImageIcon imgCapa = new ImageIcon(imgB[numeroB]);
+			controle.pMemoria.pecas[numeroB].setIcon(new ImageIcon(imgCapa.getImage().getScaledInstance(controle.pMemoria.pecas[numeroB].getWidth(),controle.pMemoria.pecas[numeroB].getHeight(), Image.SCALE_DEFAULT)));
+			
+		}
+		
+	}
+	
+}

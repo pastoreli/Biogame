@@ -1,0 +1,64 @@
+package br.com.etecGuainazes.BioGame.View;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Toolkit;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+
+import br.com.etecGuainazes.BioGame.Controller.IniciarSessao;
+import br.com.etecGuainazes.BioGame.Model.Usuario;
+
+public class Home extends JPanel {
+
+	static  int w = (int) Toolkit.getDefaultToolkit ().getScreenSize ().getWidth();
+	static int h = (int) Toolkit.getDefaultToolkit ().getScreenSize ().getHeight ();
+	
+	Usuario usuario;
+	
+	IniciarSessao sessao = new IniciarSessao();
+	
+	JLabel cabecalho;
+	
+	public Home(){
+		
+		this.setLayout(null);
+		
+		Date data = new Date(System.currentTimeMillis());  
+		SimpleDateFormat formatarHour = new SimpleDateFormat("HH"); 
+		int hora = Integer.parseInt(formatarHour.format(data));
+		
+		if(hora < 12){
+		
+			cabecalho = new JLabel("Bom dia "+usuario.getUser());
+		
+		}else if(hora < 16){
+			
+			cabecalho = new JLabel("Boa tarde "+usuario.getUser());
+			
+		}else{
+			
+			cabecalho = new JLabel("Boa noite "+usuario.getUser());
+			
+		}
+		
+		cabecalho.setOpaque(true);
+		cabecalho.setBounds(0,0,w,60);
+		cabecalho.setBackground(new Color(230,230,230));
+		cabecalho.setForeground(new Color(250,171,75));
+		cabecalho.setFont(new Font("Century Gothic",  Font. PLAIN,  42));
+		cabecalho.setHorizontalAlignment(SwingConstants.LEFT);
+		cabecalho.setVerticalAlignment(SwingConstants.CENTER);
+		
+		this.add(cabecalho);
+		
+		this.setBackground(new Color(255,255,255));  
+		
+	}
+	
+}

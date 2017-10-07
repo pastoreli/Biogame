@@ -1,0 +1,168 @@
+package br.com.etecGuainazes.BioGame.View;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.text.html.parser.Parser;
+
+import br.com.etecGuainazes.BioGame.Controller.IniciarSessao;
+import br.com.etecGuainazes.BioGame.Model.Conexao;
+import br.com.etecGuainazes.BioGame.Model.Usuario;
+
+public class Home extends JPanel {
+
+	static  int w = (int) Toolkit.getDefaultToolkit ().getScreenSize ().getWidth();
+	static int h = (int) Toolkit.getDefaultToolkit ().getScreenSize ().getHeight ();
+	
+	Usuario usuario;
+	
+	private Connection conn = new Conexao().getConexao();
+	
+	IniciarSessao sessao = new IniciarSessao();
+	
+	JLabel cabecalho, nomeUser, estrela, pontuacao;
+	
+	JButton sair;
+	
+	public Home(){
+		
+		this.setLayout(null);
+		
+		cabecalho = new JLabel();
+		cabecalho.setOpaque(true);
+		cabecalho.setBounds(0,0,w,60);
+		cabecalho.setBackground(new Color(230,230,230));
+		cabecalho.setForeground(new Color(250,171,75));
+		cabecalho.setFont(new Font("Century Gothic",  Font. PLAIN,  30));
+		cabecalho.setHorizontalAlignment(SwingConstants.LEFT);
+		cabecalho.setVerticalAlignment(SwingConstants.CENTER);
+		
+		Date data = new Date(System.currentTimeMillis());  
+		SimpleDateFormat formatarHour = new SimpleDateFormat("HH"); 
+		int hora = Integer.parseInt(formatarHour.format(data));
+		
+		if(hora < 12){
+		
+			nomeUser = new JLabel("Bom dia "+usuario.getUser());
+		
+		}else if(hora < 18){
+			
+			nomeUser = new JLabel("Boa tarde "+usuario.getUser());
+			
+		}else{
+			
+			nomeUser = new JLabel("Boa noite "+usuario.getUser());
+			
+		}
+		
+		nomeUser.setBounds(30,0,300,60);
+		nomeUser.setBackground(new Color(230,230,230));
+		nomeUser.setForeground(new Color(250,171,75));
+		nomeUser.setFont(new Font("Century Gothic",  Font. PLAIN,  22));
+		nomeUser.setHorizontalAlignment(SwingConstants.CENTER);
+		nomeUser.setVerticalAlignment(SwingConstants.CENTER);
+		
+		estrela = new JLabel();
+		estrela.setIcon(new ImageIcon("img/estrela.png"));
+		estrela.setBounds((w/2)-25,0,50,60);
+		
+		try{
+		
+		String sql=null;
+		
+		sql = "SELECT nomeUsuario, pontoUsuario FROM tbUsuario WHERE nomeUsuario = '"+usuario.getUser()+"'";
+		
+		Statement stm = conn.createStatement();
+		
+		ResultSet rs = stm.executeQuery(sql);	
+		
+		if(rs.next()){
+			
+			if(rs.getString("nomeUsuario").equals(usuario.getUser())){
+				
+				pontuacao = new JLabel(""+(rs.getInt("pontoUsuario")));
+				
+			}
+		
+		}
+			
+		}catch(Exception e){
+			
+			System.out.println(e.getMessage());
+			
+		}
+
+		pontuacao.setBounds((w/2)-20,0,150,60);
+		pontuacao.setBackground(new Color(230,230,230));
+		pontuacao.setForeground(new Color(250,171,75));
+		pontuacao.setFont(new Font("Century Gothic",  Font. PLAIN,  22));
+		pontuacao.setHorizontalAlignment(SwingConstants.CENTER);
+		pontuacao.setVerticalAlignment(SwingConstants.CENTER);
+		
+		sair = (new JButton("Sair"));
+		sair.setBounds((w,0,150,60);
+		sair.setBackground(new Color(250,171,75));
+		sair.setForeground(new Color(230, 230, 230));
+		sair.setFont(new Font("Century Gothic",  Font. PLAIN,  18));
+		sair.setBorder(null);
+		sair.setBorderPainted(false);
+		sair.addMouseListener(new MouseAdapter() {
+			 @Override
+			 public void mouseEntered(MouseEvent e) {
+				 
+				 sair.setBackground(new Color(245,138,5));
+				 
+			 }
+			 @Override
+			 public void mouseExited(MouseEvent e) {
+				 
+				 sair.setBackground(new Color(250,171,75));
+				 
+			}
+		});
+		sair.addActionListener(new ActionListener(){
+
+			public void actionPerformed(ActionEvent e) {
+				
+				if(txtUserCad.getText() != "Nome de usuário" && txtUserCad.getForeground().equals(new Color(200,200,200)) && txtSenhaCad.getText() != "Senha" && txtSenhaCad.getForeground().equals(new Color(200,200,200)) && txtMail.getText() != "Email" && txtMail.getForeground().equals(new Color(200,200,200))){
+					
+					usuario.setUser(txtUserCad.getText());
+					usuario.setSenha(txtSenhaCad.getText());
+					usuario.setEmail(txtMail.getText());
+					
+					sessao.cadastrar();
+					
+				}
+				
+			}
+			
+					
+		});
+		
+		this.add(estrela);
+		this.add(pontuacao);
+		this.add(nomeUser);
+		this.add(cabecalho);
+		
+		this.setBackground(new Color(255,255,255)); 
+		this.setBounds(w+20,20,w-40,h-80);
+		
+	}
+	
+}

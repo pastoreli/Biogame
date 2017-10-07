@@ -1,0 +1,196 @@
+package br.com.etecGuainazes.BioGame.View;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
+
+import br.com.etecGuainazes.BioGame.Controller.Efeitos;
+
+public class Jogos extends JPanel{
+
+	static  int w = (int) Toolkit.getDefaultToolkit ().getScreenSize ().getWidth();
+	static int h = (int) Toolkit.getDefaultToolkit ().getScreenSize ().getHeight ();
+	
+	JLabel cabecalho, nomeUser, estrela, pontuacao;
+	
+	JButton voltar, atual, ordem;
+	
+	boolean iniciado = false;
+	
+	//tempo
+	
+	JLabel lblTempo, relogio, borda, barra, oculta;
+	
+	public Jogos(){
+		
+		this.setLayout(null);
+		this.setBounds(20,20,w-40,h-80);
+		
+		cabecalho = new JLabel();
+		cabecalho.setOpaque(true);
+		cabecalho.setBounds(0,0,w,60);
+		cabecalho.setBackground(new Color(230,230,230));
+		cabecalho.setForeground(new Color(250,171,75));
+		cabecalho.setFont(new Font("Century Gothic",  Font. PLAIN,  30));
+		cabecalho.setHorizontalAlignment(SwingConstants.LEFT);
+		cabecalho.setVerticalAlignment(SwingConstants.CENTER);
+		
+		estrela = new JLabel();
+		estrela.setIcon(new ImageIcon("img/estrela.png"));
+		estrela.setBounds(w-160,0,50,60);
+		
+		pontuacao = new JLabel(Home.pontuacao.getText());
+		pontuacao.setBounds(w-160,0,150,60);
+		pontuacao.setBackground(new Color(230,230,230));
+		pontuacao.setForeground(new Color(250,171,75));
+		pontuacao.setFont(new Font("Century Gothic",  Font. PLAIN,  22));
+		pontuacao.setHorizontalAlignment(SwingConstants.CENTER);
+		pontuacao.setVerticalAlignment(SwingConstants.CENTER);
+		
+		voltar = (new JButton());
+		voltar.setBounds(30,0,60,60);
+		voltar.setIcon(new ImageIcon("img/seta.png"));
+		voltar.setContentAreaFilled(false);
+		voltar.setBorder(null);
+		voltar.setBorderPainted(false);
+		voltar.setOpaque(false);
+		voltar.addMouseListener(new MouseAdapter() {
+			 @Override
+			 public void mouseEntered(MouseEvent e) {
+				 
+				 voltar.setIcon(new ImageIcon("img/seta2.png"));
+				 
+			 }
+			 @Override
+			 public void mouseExited(MouseEvent e) {
+				 
+				 voltar.setIcon(new ImageIcon("img/seta.png"));
+				 
+			}
+		});
+		voltar.addActionListener(new ActionListener(){
+
+			public void actionPerformed(ActionEvent e) {
+				
+				if(iniciado == false){
+				
+					iniciado = true;
+					
+					Efeitos f = new Efeitos();
+					
+					f.setEntrada(2);
+					f.setSaida(3);
+					f.setEscolhaE(3);
+					
+					f.transicaoReducao();
+					
+				}
+				
+			}
+					
+		});
+		
+		atual = (new JButton("Memória"));
+		atual.setBounds((w/2)-50,15,100,30);
+		atual.setBackground(new Color(250,171,75));
+		atual.setForeground(new Color(230,230,230));
+		atual.setFont(new Font("Century Gothic",  Font. PLAIN,  18));
+		atual.setBorder(new LineBorder(new Color(250,171,75), 2, false));
+		
+		ordem = (new JButton("Ordem"));
+		ordem.setBounds((w/2)+50,15,100,30);
+		ordem.setBackground(new Color(230,230,230));
+		ordem.setForeground(new Color(250,171,75));
+		ordem.setFont(new Font("Century Gothic",  Font. PLAIN,  18));
+		ordem.setBorder(new LineBorder(new Color(250,171,75), 2, false));
+		ordem.addMouseListener(new MouseAdapter() {
+			 @Override
+			 public void mouseEntered(MouseEvent e) {
+				 
+				 ordem.setBackground(new Color(250,171,75));
+				 ordem.setForeground(new Color(230,230,230));
+				 atual.setBackground(new Color(230,230,230));
+				 atual.setForeground(new Color(250,171,75));
+				 
+			 }
+			 @Override
+			 public void mouseExited(MouseEvent e) {
+				 
+				 ordem.setBackground(new Color(230,230,230));
+				 ordem.setForeground(new Color(250,171,75));
+				 atual.setBackground(new Color(250,171,75));
+				 atual.setForeground(new Color(230,230,230));
+				 
+			}
+		});
+		
+		//tempo
+		
+		lblTempo = new JLabel("Tempo");
+		lblTempo.setBounds((this.getWidth()/2)-50,this.getHeight()+2,100,38);
+		lblTempo.setForeground(new Color(255,255,255));
+		lblTempo.setFont(new Font("Century Gothic",  Font. PLAIN,  22));
+		lblTempo.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTempo.setVerticalAlignment(SwingConstants.CENTER);
+		
+		relogio = new JLabel();
+		relogio.setIcon(new ImageIcon("img/clok.png"));
+		relogio.setBounds((this.getWidth()/2)-20,this.getHeight(),25,25);
+		relogio.setForeground(new Color(255,255,255));
+		relogio.setFont(new Font("Century Gothic",  Font. PLAIN,  22));
+		relogio.setHorizontalAlignment(SwingConstants.CENTER);
+		relogio.setVerticalAlignment(SwingConstants.CENTER);
+		
+		borda = new JLabel();
+		borda.setOpaque(true);
+		borda.setBounds(0,this.getHeight()-2,w+2,2);
+		borda.setBackground(new Color(254,186,25));
+		borda.setFont(new Font("Century Gothic",  Font. PLAIN,  30));
+		
+		barra = new JLabel();
+		barra.setOpaque(true);
+		barra.setBounds(0,this.getHeight()+4,w+2,38);
+		barra.setBackground(new Color(0,205,174));
+		barra.setFont(new Font("Century Gothic",  Font. PLAIN,  30));
+		barra.setHorizontalAlignment(SwingConstants.LEFT);
+		barra.setVerticalAlignment(SwingConstants.CENTER);
+		
+		oculta = new JLabel();
+		oculta.setOpaque(true);
+		oculta.setBounds(0,this.getHeight()+4,w+2,38);
+		oculta.setBackground(new Color(0,60,51));
+		oculta.setFont(new Font("Century Gothic",  Font. PLAIN,  30));
+		
+		this.add(atual);
+		this.add(ordem);
+		this.add(voltar);
+		this.add(estrela);
+		this.add(pontuacao);
+		this.add(cabecalho);
+		
+		//tempo
+		this.add(lblTempo);
+		this.add(relogio);
+		this.add(borda);
+		this.add(barra);
+		this.add(oculta);
+		
+		ControladorFrame.pMemoria = new JogoMemoria();
+		this.add(ControladorFrame.pMemoria);
+		
+		this.setBackground(new Color(255,255,255)); 
+		
+	}
+	
+}

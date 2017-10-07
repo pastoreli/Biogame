@@ -1,0 +1,155 @@
+package br.com.etecGuainazes.BioGame.View;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Toolkit;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
+
+public class Login extends JPanel {
+
+	static JTextField txtUser;
+	static JPasswordField txtSenha;
+	static JButton logar;
+	JLabel cabecalho;
+	JLabel lblTitulo, texto;
+	JLabel faixaUser, faixaSenha;
+	
+	static  int tamanho = (int) Toolkit.getDefaultToolkit ().getScreenSize ().getWidth();
+	static int tamanhoH = (int) Toolkit.getDefaultToolkit ().getScreenSize ().getHeight ();
+	
+	public Login(){
+		
+		this.setLayout(null);
+		
+		cabecalho = new JLabel();
+		cabecalho.setOpaque(true);
+		cabecalho.setBounds(0,0,tamanho,60);
+		cabecalho.setBackground(new Color(230,230,230));
+		
+		lblTitulo = new JLabel("Logar");
+		lblTitulo.setBounds((tamanho/2)-60,-2,120,50);
+		lblTitulo.setForeground(new Color(250,171,75));
+		lblTitulo.setFont(new Font("Century Gothic",  Font. PLAIN,  42));
+		
+		texto = new JLabel("Bem-Vindo");
+		texto.setBounds((tamanho/2)-175,150,350,70);
+		texto.setForeground(new Color(200,200,200));
+		texto.setFont(new Font("Century Gothic",  Font. PLAIN,  60));
+		
+		txtUser = new JTextField();
+		txtUser.setPreferredSize(txtUser.getPreferredSize());
+		txtUser.setText("");
+		txtUser.setBackground(new Color(245,245,245));
+		txtUser.setForeground(new Color(200,200,200));
+		txtUser.setBounds((tamanho/2)-175,(tamanhoH/2)-80,350,30);
+		txtUser.setBorder(null);
+		txtUser.setFont(new Font("Century Gothic",  Font. PLAIN,  20));
+		txtUser.setHorizontalAlignment(SwingConstants.CENTER);
+		txtUser.addFocusListener(new FocusListener() {  
+
+			@Override
+			public void focusGained(FocusEvent arg0) {
+				
+				faixaUser.setBackground(new Color(250,171,75));
+				txtUser.setForeground(new Color(250,171,75));
+				
+			}
+
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				
+				faixaUser.setBackground(new Color(200,200,200));
+				txtUser.setForeground(new Color(200,200,200));
+				
+			}  
+  
+			});
+		
+		faixaUser = new JLabel();
+		faixaUser.setOpaque(true);
+		faixaUser.setBounds((tamanho/2)-175,(tamanhoH/2)-50,350,3);
+		faixaUser.setBackground(new Color(200,200,200));
+		
+		txtSenha = new JPasswordField();
+		txtSenha.setPreferredSize(txtUser.getPreferredSize());
+		txtSenha.setText("");
+		txtSenha.setBackground(new Color(245,245,245));
+		txtSenha.setForeground(new Color(200,200,200));
+		txtSenha.setBounds((tamanho/2)-175,(tamanhoH/2)-15,350,30);
+		txtSenha.setBorder(null);
+		txtSenha.setFont(new Font("Century Gothic",  Font. PLAIN,  20));
+		txtSenha.setHorizontalAlignment(SwingConstants.CENTER);
+		txtSenha.addFocusListener(new FocusListener() {  
+
+			@Override
+			public void focusGained(FocusEvent arg0) {
+				
+				faixaSenha.setBackground(new Color(250,171,75));
+				txtSenha.setForeground(new Color(250,171,75));
+				
+			}
+
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				
+				faixaSenha.setBackground(new Color(200,200,200));
+				txtSenha.setForeground(new Color(200,200,200));
+				
+			}  
+  
+			});
+		
+		faixaSenha = new JLabel();
+		faixaSenha.setOpaque(true);
+		faixaSenha.setBounds((tamanho/2)-175,(tamanhoH/2)+15,350,3);
+		faixaSenha.setBackground(new Color(200,200,200));
+		
+		logar = (new JButton("Logar"));
+		logar.setBounds((tamanho/2)-65,(tamanhoH/2)+65,130,40);
+		logar.setBackground(new Color(250,171,75));
+		logar.setForeground(new Color(230, 230, 230));
+		logar.setFont(new Font("Century Gothic",  Font. PLAIN,  18));
+		logar.setBorder(null);
+		logar.setBorderPainted(false);
+		logar.addMouseListener(new MouseAdapter() {
+			 @Override
+			 public void mouseEntered(MouseEvent e) {
+				 
+				 logar.setBackground(new Color(245,138,5));
+				 
+			 }
+			 @Override
+			 public void mouseExited(MouseEvent e) {
+				 
+				 logar.setBackground(new Color(250,171,75));
+				 
+			}
+		});
+//		logar.setContentAreaFilled(false);
+//		logar.setOpaque(false);
+		
+		this.add(txtUser);
+		this.add(faixaUser);
+		this.add(txtSenha);
+		this.add(faixaSenha);
+		this.add(logar);
+		this.add(lblTitulo);
+		this.add(texto);
+		this.add(cabecalho);
+		
+		this.setBackground(new Color(245,245,245));  
+		
+	}
+	
+}

@@ -1,0 +1,9 @@
+package br.com.etecGuainazes.BioGame.View;
+
+import javax.swing.JPanel;
+
+public class Sequencia extends JPanel{
+
+	
+	
+}

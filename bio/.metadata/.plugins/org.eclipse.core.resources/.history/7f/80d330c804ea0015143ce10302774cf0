@@ -1,0 +1,8 @@
+package br.com.etecGuainazes.BioGame.Model;
+
+public class Usuario {
+
+	private String user;
+	private String senha;
+	
+}

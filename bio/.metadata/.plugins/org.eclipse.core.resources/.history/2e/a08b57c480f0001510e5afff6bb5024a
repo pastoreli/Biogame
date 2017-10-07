@@ -1,0 +1,7 @@
+package br.com.etecGuainazes.BioGame.Controller;
+
+public class LogicaMemoria {
+
+	public int nivel;
+	
+}

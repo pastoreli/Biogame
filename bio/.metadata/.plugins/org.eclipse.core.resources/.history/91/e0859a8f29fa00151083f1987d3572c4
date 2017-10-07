@@ -1,0 +1,365 @@
+package br.com.etecGuainazes.BioGame.View;
+
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.SwingConstants;
+
+import br.com.etecGuainazes.BioGame.Controller.Conexao;
+import br.com.etecGuainazes.BioGame.Controller.Efeitos;
+import br.com.etecGuainazes.BioGame.Model.Usuario;
+
+public class Tratamentos extends JPanel{
+
+	static  int w = (int) Toolkit.getDefaultToolkit ().getScreenSize ().getWidth();
+	static int h = (int) Toolkit.getDefaultToolkit ().getScreenSize ().getHeight ();
+	
+	Usuario usuario;
+	
+	JScrollPane scroll = new JScrollPane();  
+	
+	JPanel todos = new JPanel();
+	
+	JPanel mosquito = new JPanel();
+	JLabel tituloM, blockM, textoM;
+	
+	JPanel dengue = new JPanel();
+	JLabel tituloD, blockD, textoD;
+	
+	JPanel febre = new JPanel();
+	JLabel tituloF, blockF, textoF;
+	
+	JPanel zica = new JPanel();
+	JLabel tituloZ, blockZ, textoZ;
+	
+	JPanel chickunguya = new JPanel();
+	JLabel tituloC, blockC, textoMC;
+	
+	JLabel cabecalho, nomeUser;
+	
+	JButton voltar;
+	
+	//tamanho dos panel
+	
+	int tamanhoP = (h-100)/5;
+	
+	private Connection conn = new Conexao().getConexao();
+	
+	private String sql = null;
+	
+	public Tratamentos(){
+		
+		this.setLayout(null);
+		this.setBounds(w+20,20,w-40,h-80);
+		
+		cabecalho = new JLabel("Tratamentos");
+		cabecalho.setOpaque(true);
+		cabecalho.setBounds(0,0,w,60);
+		cabecalho.setBackground(new Color(230,230,230));
+		cabecalho.setForeground(new Color(2,123,208));
+		cabecalho.setFont(new Font("Century Gothic",  Font. PLAIN,  25));
+		cabecalho.setHorizontalAlignment(SwingConstants.CENTER);
+		cabecalho.setVerticalAlignment(SwingConstants.CENTER);
+		
+		nomeUser = new JLabel(ControladorFrame.pHome.nomeUser.getText());
+		nomeUser.setBounds(w-350,0,300,60);
+		nomeUser.setBackground(new Color(255,255,255));
+		nomeUser.setForeground(new Color(2,123,208));
+		nomeUser.setFont(new Font("Century Gothic",  Font. PLAIN,  22));
+		nomeUser.setHorizontalAlignment(SwingConstants.CENTER);
+		nomeUser.setVerticalAlignment(SwingConstants.CENTER);
+		
+		voltar = (new JButton());
+		voltar.setBounds(30,0,60,60);
+		voltar.setIcon(new ImageIcon("img/seta.png"));
+		voltar.setContentAreaFilled(false);
+		voltar.setBorder(null);
+		voltar.setBorderPainted(false);
+		voltar.setOpaque(false);
+		voltar.addMouseListener(new MouseAdapter() {
+			 @Override
+			 public void mouseEntered(MouseEvent e) {
+				 
+				 voltar.setIcon(new ImageIcon("img/seta2.png"));
+				 
+			 }
+			 @Override
+			 public void mouseExited(MouseEvent e) {
+				 
+				 voltar.setIcon(new ImageIcon("img/seta.png"));
+				 
+			}
+		});
+		voltar.addActionListener(new ActionListener(){
+
+			public void actionPerformed(ActionEvent e) {
+				
+				Efeitos f = new Efeitos();
+				
+				f.setEntrada(2);
+				f.setSaida(4);
+				f.setEscolhaE(5);
+				
+				f.transicaoReducao();
+				
+			}
+					
+		});
+		
+		 this.setContentPane(scroll); 
+		 scroll.setBounds(0,60,w+2,h-100);
+		 scroll.setViewportView(todos); 
+	     scroll.setBackground(new Color(0,0,0,0));   
+	     scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED); 
+	     scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+	     this.add(scroll);  
+	     scroll.add(todos);
+	     
+	     todos = (new JPanel());
+			todos.setLayout(null);
+			todos.setBounds(200,0, w+2, h-100);
+		 
+		 todos.setPreferredSize(new Dimension(w, h));  
+		
+		mosquito.setLayout(null);
+		mosquito.setBounds(0, 0, w+2, tamanhoP);
+		mosquito.setBackground(new Color(255,255,255));
+		
+		tituloM = new JLabel("Mosquito");
+		tituloM.setBounds(30,10,500,60);
+		tituloM.setForeground(new Color(2,123,208));
+		tituloM.setFont(new Font("Century Gothic",  Font. PLAIN,  22));
+		tituloM.setVerticalAlignment(SwingConstants.CENTER);
+		mosquito.add(tituloM);
+		
+		sql = "SELECT nomeUsuario, nivel1 FROM tbUsuario WHERE nomeUsuario = '"+usuario.getUser()+"'";
+		
+		try {
+			
+			Statement stm = conn.createStatement();
+			ResultSet rs = stm.executeQuery(sql);	
+			
+			if(rs.next()){
+				
+				if(rs.getInt("nivel1")==1){
+					
+					textoM = new JLabel("<html><p>Não deixe água parada, retire água das garrafas e as vire para baixo, tampe sua caixa d'água, mantenha os pratos de vasos de platas com areia, manteinha seu jardim sempre limpo e livre de água parada, não deixe agua para dentro de pneus velhos e mantenha sua calha limpa.</p></html>");
+					textoM.setBounds(30,60,w-100,tamanhoP-60);
+					textoM.setForeground(new Color(60,60,60));
+					textoM.setFont(new Font("Century Gothic",  Font. PLAIN,  20));
+					mosquito.add(textoM);
+					
+				}else{
+					
+					blockM = new JLabel("?");
+					blockM.setBounds(30,50,200,100);
+					blockM.setForeground(new Color(2,123,208));
+					blockM.setFont(new Font("Century Gothic",  Font. PLAIN,  60));
+					blockM.setVerticalAlignment(SwingConstants.CENTER);
+					mosquito.add(blockM);
+					
+				}
+				
+			}
+		
+		} catch (SQLException e) {}
+		
+		todos.add(mosquito);
+		
+		dengue.setLayout(null);
+		dengue.setBounds(0, mosquito.getLocation().y+tamanhoP, w+2, tamanhoP);
+		dengue.setBackground(new Color(255,255,255));
+		
+		tituloD = new JLabel("Dengue");
+		tituloD.setBounds(30,10,500,60);
+		tituloD.setForeground(new Color(243,22,38));
+		tituloD.setFont(new Font("Century Gothic",  Font. PLAIN,  22));
+		tituloD.setVerticalAlignment(SwingConstants.CENTER);
+		dengue.add(tituloD);
+		
+		sql = "SELECT nomeUsuario, nivel2 FROM tbUsuario WHERE nomeUsuario = '"+usuario.getUser()+"'";
+		
+		try {
+			
+			Statement stm = conn.createStatement();
+			ResultSet rs = stm.executeQuery(sql);	
+			
+			if(rs.next()){
+				
+				if(rs.getInt("nivel2")==1){
+					
+					textoD = new JLabel("<html><p>Não há tratamento específico, apenas algumas formas de aliviar os sintomas. Deve-se ingerir muito líquido para manter a hidratação, sendo a água de coco uma ótima opção.Para combater a febre alta e as dores, recomenda-se o uso de dipirona e paracetamol, jamais usar antitérmicos que contenham ácido acetilsalicílico, como AAS e Melhoral, que podem causar sangramentos. E não se deve fazer o uso de anti-inflamatórios por conta de seu potencial hemorrágico.</p></html>");
+					textoD.setBounds(30,60,w-100,tamanhoP-60);
+					textoD.setForeground(new Color(60,60,60));
+					textoD.setFont(new Font("Century Gothic",  Font. PLAIN,  20));
+					dengue.add(textoD);
+					
+				}else{
+					
+					blockD = new JLabel("?");
+					blockD.setBounds(30,50,200,100);
+					blockD.setForeground(new Color(243,22,38));
+					blockD.setFont(new Font("Century Gothic",  Font. PLAIN,  60));
+					blockD.setVerticalAlignment(SwingConstants.CENTER);
+					dengue.add(blockD);
+					
+				}
+				
+			}
+		
+		} catch (SQLException e) {}
+		
+		todos.add(dengue);
+		
+		febre.setLayout(null);
+		febre.setBounds(0, dengue.getLocation().y+tamanhoP, w+2, tamanhoP);
+		febre.setBackground(new Color(255,255,255));
+		
+		tituloF = new JLabel("Febre Amarela");
+		tituloF.setBounds(30,10,500,60);
+		tituloF.setForeground(new Color(255,174,0));
+		tituloF.setFont(new Font("Century Gothic",  Font. PLAIN,  22));
+		tituloF.setVerticalAlignment(SwingConstants.CENTER);
+		febre.add(tituloF);
+		
+		sql = "SELECT nomeUsuario, nivel3 FROM tbUsuario WHERE nomeUsuario = '"+usuario.getUser()+"'";
+		
+		try {
+			
+			Statement stm = conn.createStatement();
+			ResultSet rs = stm.executeQuery(sql);	
+			
+			if(rs.next()){
+				
+				if(rs.getInt("nivel3")==1){
+					
+					
+					
+				}else{
+					
+					blockF = new JLabel("?");
+					blockF.setBounds(30,50,200,100);
+					blockF.setForeground(new Color(255,174,0));
+					blockF.setFont(new Font("Century Gothic",  Font. PLAIN,  60));
+					blockF.setVerticalAlignment(SwingConstants.CENTER);
+					febre.add(blockF);
+					
+				}
+				
+			}
+		
+		} catch (SQLException e) {}
+		
+		todos.add(febre);
+		
+		zica.setLayout(null);
+		zica.setBounds(0, febre.getLocation().y+tamanhoP, w+2, tamanhoP);
+		zica.setBackground(new Color(255,255,255));
+		
+		tituloZ = new JLabel("Zica vírus");
+		tituloZ.setBounds(30,10,500,60);
+		tituloZ.setForeground(new Color(130,81,187));
+		tituloZ.setFont(new Font("Century Gothic",  Font. PLAIN,  22));
+		tituloZ.setVerticalAlignment(SwingConstants.CENTER);
+		zica.add(tituloZ);
+		
+		sql = "SELECT nomeUsuario, nivel4 FROM tbUsuario WHERE nomeUsuario = '"+usuario.getUser()+"'";
+		
+		try {
+			
+			Statement stm = conn.createStatement();
+			ResultSet rs = stm.executeQuery(sql);	
+			
+			if(rs.next()){
+				
+				if(rs.getInt("nivel4")==1){
+					
+					
+					
+				}else{
+					
+					blockZ = new JLabel("?");
+					blockZ.setBounds(30,50,200,100);
+					blockZ.setForeground(new Color(130,81,187));
+					blockZ.setFont(new Font("Century Gothic",  Font. PLAIN,  60));
+					blockZ.setVerticalAlignment(SwingConstants.CENTER);
+					zica.add(blockZ);
+					
+				}
+				
+			}
+		
+		} catch (SQLException e) {}
+		
+		todos.add(zica);
+		
+		chickunguya.setLayout(null);
+		chickunguya.setBounds(0, zica.getLocation().y+tamanhoP, w+2, tamanhoP);
+		chickunguya.setBackground(new Color(255,255,255));
+		
+		tituloC = new JLabel("Chickunguya");
+		tituloC.setBounds(30,10,500,60);
+		tituloC.setForeground(new Color(66,170,33));
+		tituloC.setFont(new Font("Century Gothic",  Font. PLAIN,  22));
+		tituloC.setVerticalAlignment(SwingConstants.CENTER);
+		chickunguya.add(tituloC);
+		
+		sql = "SELECT nomeUsuario, nivel5 FROM tbUsuario WHERE nomeUsuario = '"+usuario.getUser()+"'";
+		
+		try {
+			
+			Statement stm = conn.createStatement();
+			ResultSet rs = stm.executeQuery(sql);	
+			
+			if(rs.next()){
+				
+				if(rs.getInt("nivel5")==1){
+					
+					
+					
+				}else{
+					
+					blockC = new JLabel("?");
+					blockC.setBounds(30,50,200,100);
+					blockC.setForeground(new Color(66,170,33));
+					blockC.setFont(new Font("Century Gothic",  Font. PLAIN,  60));
+					blockC.setVerticalAlignment(SwingConstants.CENTER);
+					chickunguya.add(blockC);
+					
+				}
+				
+			}
+		
+		} catch (SQLException e) {}
+		
+		todos.add(chickunguya);
+		
+		this.add(nomeUser);
+		this.add(voltar);
+		this.add(cabecalho);
+		
+		this.setBackground(new Color(255,255,255)); 
+		
+	}
+
+	private void setContentPane(JScrollPane scroll2) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+}

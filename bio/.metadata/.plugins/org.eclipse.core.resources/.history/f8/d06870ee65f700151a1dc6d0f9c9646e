@@ -1,0 +1,301 @@
+package br.com.etecGuainazes.BioGame.View;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.util.Random;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
+
+import br.com.etecGuainazes.BioGame.Controller.Efeitos;
+
+public class Sequencia extends JPanel{
+
+	static  int w = (int) Toolkit.getDefaultToolkit ().getScreenSize ().getWidth();
+	static int h = (int) Toolkit.getDefaultToolkit ().getScreenSize ().getHeight ();
+	
+	JLabel campo[];
+	
+	JButton verifica;
+	
+	//itens
+	
+	JLabel divisoria;
+	String[] imgs = {"imgA/ovo.jpg","imgA/larva.jpg","imgA/pupa.jpg","imgA/mosquito.jpg"};
+	
+	JButton pecas[];
+	int roleta;
+	
+	//arrasta
+	private static final long serialVersionUID = 1L; 
+    private int x;  
+    private int y; 
+	
+	public Sequencia(){			
+	
+		this.setLayout(null);
+		this.setBounds(w,0,w+2,h-140);
+		this.setBackground(new Color(250,171,75));
+		
+		
+		divisoria = new JLabel();
+		divisoria.setOpaque(true);
+		divisoria.setBounds(this.getWidth()-((this.getWidth()/100)*20),0,2,this.getHeight()+2);
+		divisoria.setBackground(new Color(0,205,174));
+		
+		//img
+		
+		ImageIcon imgPecas;
+		
+		pecas = new JButton[4];
+		int descBtn = 0;
+		int altura = (this.getHeight()/2)-((((this.getWidth()/100)*12)/2)*3), distancia = (this.getWidth()/100)*20;
+		Random espalhar = new Random();
+		int roda=0;
+		int[] valida = {-1,-1,-1,-1};
+		
+		while(roda<pecas.length){
+	
+			roleta = espalhar.nextInt(4);
+			
+			for(int i=0; i<valida.length; i++){
+				
+				if(valida[i] == roleta){
+					
+					break;
+					
+				}
+				
+				if(i == valida.length-1){
+					valida[roleta] = roleta;
+					descBtn = roleta+1;
+					pecas[roleta] = (new JButton(Integer.toString(descBtn)));
+					
+					if(roda<2){
+						
+						pecas[roleta].setBounds(this.getWidth()-distancia+(distancia/100)*8,altura,(this.getWidth()/100)*8,(this.getWidth()/100)*12);
+					
+					}else{
+						
+						pecas[roleta].setBounds(this.getWidth()-distancia+(distancia/100)*4+distancia/2,altura,(this.getWidth()/100)*8,(this.getWidth()/100)*12);
+						
+					}
+					
+					imgPecas = new ImageIcon(imgs[roleta]);
+					pecas[roleta].setIcon(new ImageIcon(imgPecas.getImage().getScaledInstance(pecas[roleta].getWidth(),pecas[roleta].getHeight(), Image.SCALE_DEFAULT)));
+					pecas[roleta].setBackground(new Color(255,255,255));
+					pecas[roleta].setForeground(new Color(250,171,75));
+					pecas[roleta].setFont(new Font("Century Gothic",  Font. PLAIN,  0));
+					pecas[roleta].setBorder(new LineBorder(new Color(0,205,174), 2, true));
+					pecas[roleta].setHorizontalAlignment(SwingConstants.CENTER);
+					pecas[roleta].setVerticalAlignment(SwingConstants.CENTER);
+					pecas[roleta].addMouseMotionListener(new MouseMotionListener(){
+
+						@Override
+						public void mouseDragged(MouseEvent e) {
+							
+							for(int i=0; i<pecas.length;i++){
+								
+								if(((JButton)e.getSource()).getText().equals(pecas[i].getText())){
+									
+									roleta = i;
+									
+								}
+								
+							}
+
+								if (e.getX() - x == 0 || e.getX() - x == 0) {  
+					                x = e.getX();  
+					            }  
+					            if (e.getY() - y == 0 || e.getY() - y == 0) {  
+					                y = e.getY();  
+					            }  
+					            pecas[roleta].setLocation(pecas[roleta].getX() + (e.getX() - x), pecas[roleta].getY() + (e.getY() - y)); 
+					            
+					            if(pecas[roleta].getLocation().x < divisoria.getLocation().x-50){
+					            	
+					            	ImageIcon imgPecas = new ImageIcon(imgs[roleta]);
+					            	pecas[roleta].setSize((w/100)*14,(w/100)*20);
+					            	pecas[roleta].setIcon(new ImageIcon(imgPecas.getImage().getScaledInstance(pecas[roleta].getWidth(),pecas[roleta].getHeight(), Image.SCALE_DEFAULT)));
+					            	
+					            }else{
+					            	
+					            	ImageIcon imgPecas = new ImageIcon(imgs[roleta]);
+					            	pecas[roleta].setSize((w/100)*8,(w/100)*12);
+					            	pecas[roleta].setIcon(new ImageIcon(imgPecas.getImage().getScaledInstance(pecas[roleta].getWidth(),pecas[roleta].getHeight(), Image.SCALE_DEFAULT)));
+					            	
+					            }
+							
+						}
+
+						@Override
+						public void mouseMoved(MouseEvent e) {
+						}
+
+					});
+					pecas[roleta].addMouseListener(new MouseListener(){
+
+						@Override
+						public void mouseClicked(MouseEvent e) {
+							// TODO Auto-generated method stub
+							
+						}
+
+						@Override
+						public void mouseEntered(MouseEvent e) {
+							// TODO Auto-generated method stub
+							
+						}
+
+						@Override
+						public void mouseExited(MouseEvent e) {
+							// TODO Auto-generated method stub
+							
+						}
+
+						@Override
+						public void mousePressed(MouseEvent e) {
+							
+								 x = e.getX();  
+						         y = e.getY(); 
+							
+						}
+
+						@Override
+						public void mouseReleased(MouseEvent e) {
+							
+							for(int i=0; i<pecas.length; i++){
+								
+								if(pecas[roleta].getLocation().x > campo[i].getLocation().x-30 && pecas[roleta].getLocation().x < campo[i].getLocation().x+(campo[i].getWidth()/2) && pecas[roleta].getLocation().y > campo[i].getLocation().y-30 && pecas[roleta].getLocation().y < campo[i].getLocation().y+(campo[i].getHeight()/2)){
+									
+									pecas[roleta].setLocation(campo[i].getLocation());
+									break;
+									
+								}
+								
+							}
+							
+						}
+							
+					});  
+					
+					this.add(pecas[roleta]);
+					
+					altura+=((this.getWidth()/100)*12)+10;
+					if(roda==1){
+						
+						altura = (this.getHeight()/2)-((((this.getWidth()/100)*12)/2)*3);
+						
+					}
+					
+					roda++;
+					
+				}
+				
+			}
+			
+		}
+		
+		this.add(divisoria);
+		
+		campo = new JLabel[4];
+		int descLbl = 0, tamanho = (this.getWidth()/100)*80;
+		
+		for(int i=0; i<campo.length; i++){
+		
+			descLbl++;
+			
+			campo[i] = (new JLabel(Integer.toString(descLbl)));
+			
+			if(i==0){
+				campo[i].setBounds((tamanho/2)-((((w/100)*14)/2)*2),40,(w/100)*14,(w/100)*20);
+			}else if(i<2){
+				campo[i].setBounds(campo[i-1].getLocation().x+((w/100)*15)+60,40,(w/100)*14,(w/100)*20);
+			}else if(i==2){
+				campo[i].setBounds((tamanho/2)-((((w/100)*14)/2)*2),40+((w/100)*20)+20,(w/100)*14,(w/100)*20);
+			}else{
+				campo[i].setBounds(campo[i-1].getLocation().x+((w/100)*15)+60,40+((w/100)*20)+20,(w/100)*14,(w/100)*20);
+			}
+			
+			campo[i].setBackground(new Color(255,255,255));
+			campo[i].setForeground(new Color(0,205,174));
+			campo[i].setFont(new Font("Century Gothic",  Font. PLAIN,  100));
+			campo[i].setBorder(new LineBorder(new Color(0,205,174), 2, true));
+			campo[i].setHorizontalAlignment(SwingConstants.CENTER);
+			campo[i].setVerticalAlignment(SwingConstants.CENTER);
+		
+			this.add(campo[i]);
+			
+		}
+	
+		verifica = (new JButton("Verificar"));
+		verifica.setBounds((((w-distancia))+2),this.getHeight()-28,distancia,30);
+		verifica.setBackground(new Color(250,171,75));
+		verifica.setForeground(new Color(230,230,230));
+		verifica.setFont(new Font("Century Gothic",  Font. PLAIN,  18));
+		verifica.setBorder(null);
+		verifica.addMouseListener(new MouseAdapter() {
+			 @Override
+			 public void mouseEntered(MouseEvent e) {
+				 
+				 verifica.setBackground(new Color(245,138,5));
+				 
+			 }
+			 @Override
+			 public void mouseExited(MouseEvent e) {
+				 
+				 verifica.setBackground(new Color(250,171,75));
+				 
+			}
+		});
+		verifica.addActionListener(new ActionListener(){
+
+			public void actionPerformed(ActionEvent e) {
+				
+				boolean valido = false;
+				
+				for(int i=0; i<pecas.length; i++){
+					
+					if(campo[i].getLocation().equals(pecas[i].getLocation())){
+						
+						valido = true;
+						
+					}else{
+						
+						valido = false;
+						break;
+						
+					}
+					
+				}
+				
+				if(valido == true){
+					
+					System.out.println("Eeeeeeee");
+					
+				}else{
+					
+					System.out.println("Aff");
+					
+				}
+				
+			}
+					
+		});
+		
+		this.add(verifica);
+		
+	}
+}

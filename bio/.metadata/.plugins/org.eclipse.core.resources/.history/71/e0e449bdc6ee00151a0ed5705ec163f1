@@ -1,0 +1,126 @@
+package br.com.etecGuainazes.BioGame.View;
+
+import java.awt.CardLayout;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+import br.com.etecGuainazes.BioGame.Model.Cards;
+
+public class ControladorFrame extends JFrame implements ActionListener {
+	
+	static JButton fechar, minimizar, maximizar;
+	
+	static  int tamanho = (int) Toolkit.getDefaultToolkit ().getScreenSize ().getWidth();
+	static int tamanhoH = (int) Toolkit.getDefaultToolkit ().getScreenSize ().getHeight ();
+	
+	static JPanel cabecalho = new JPanel(); 
+	static JPanel telas = new JPanel();
+	
+	Cards c = new Cards();
+	
+	public ControladorFrame(){
+		
+		this.setLayout(null);
+		
+		cabecalho.setLayout(null);
+		cabecalho.setBounds(0,0, tamanho,40);
+		cabecalho.setBackground(new Color(230,230,230));
+		
+		fechar = (new JButton());
+		fechar.setIcon(new ImageIcon("img/close.png"));
+		fechar.addActionListener(this);
+		fechar.setBounds(tamanho-40,10,20,20);
+		fechar.setForeground(new Color(40, 40, 40));
+		fechar.setContentAreaFilled(false);
+		fechar.setFont(new Font("Helvetica",  Font. PLAIN,  16));
+		fechar.setBorder(null);
+		fechar.setBorderPainted(false);
+		fechar.setOpaque(false);  
+		
+		maximizar = (new JButton());
+		maximizar.setIcon(new ImageIcon("img/maximizar.png"));
+		maximizar.addActionListener(this);
+		maximizar.setBounds(tamanho-85,10,20,20);
+		maximizar.setForeground(new Color(40, 40, 40));
+		maximizar.setContentAreaFilled(false);
+		maximizar.setFont(new Font("Helvetica",  Font. PLAIN,  16));
+		maximizar.setBorder(null);
+		maximizar.setBorderPainted(false);
+		maximizar.setOpaque(false);	   
+		
+		minimizar = (new JButton());
+		minimizar.setIcon(new ImageIcon("img/minimizar.png"));
+		minimizar.addActionListener(this);
+		minimizar.setBounds(tamanho-140,10,20,20);
+		minimizar.setForeground(new Color(40, 40, 40));
+		minimizar.setContentAreaFilled(false);
+		minimizar.setFont(new Font("Helvetica",  Font. PLAIN,  16));
+		minimizar.setBorder(null);
+		minimizar.setBorderPainted(false);
+		minimizar.setOpaque(false);   
+		
+		telas.setLayout(null);
+		telas.setBounds(0, 40, tamanho, tamanhoH-40);
+		 
+		c.getCards().setLayout(new CardLayout());
+	        
+	    Login pLogin = new Login();
+	    c.getCards().add(pLogin, "login");
+	    
+	    Home pHome = new Home();
+	    c.getCards().add(pHome, "home");
+	           
+	     c.getCards().setBackground(new Color(255,255,255));
+	     c.getCards().setBounds(0,40,tamanho, tamanhoH-40);
+	        
+	        
+	     c.setCl((CardLayout) (c.getCards().getLayout()));
+	     c.getCl().show(c.getCards(), "login"); 
+	        
+	     c.getCards().setBounds(0,0,tamanho,tamanhoH);
+		
+		cabecalho.add(fechar);
+		cabecalho.add(maximizar);
+		cabecalho.add(minimizar);
+		telas.add(c.getCards());
+		this.add(telas);
+;	    this.add(cabecalho);
+		
+		this.setUndecorated(true);
+	    this.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    this.setVisible(true);
+		this.setResizable(false);
+		this.setBackground(new Color(255,255,255));
+		
+	}
+	
+	public void actionPerformed(ActionEvent e) {
+		
+		if(e.getSource() == fechar){
+			
+			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			this.dispose();
+			
+		}
+		
+		if(e.getSource() == minimizar){
+			
+			this.setState(this.ICONIFIED);
+			
+		}
+		
+	}
+
+	
+	
+}

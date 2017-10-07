@@ -1,0 +1,73 @@
+package br.com.etecGuainazes.BioGame.View;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Toolkit;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+
+import br.com.etecGuainazes.BioGame.Controller.IniciarSessao;
+import br.com.etecGuainazes.BioGame.Model.Usuario;
+
+public class Home extends JPanel {
+
+	static  int w = (int) Toolkit.getDefaultToolkit ().getScreenSize ().getWidth();
+	static int h = (int) Toolkit.getDefaultToolkit ().getScreenSize ().getHeight ();
+	
+	Usuario usuario;
+	
+	IniciarSessao sessao = new IniciarSessao();
+	
+	JLabel cabecalho, nomeUser;
+	
+	public Home(){
+		
+		this.setLayout(null);
+		
+		cabecalho = new JLabel();
+		cabecalho.setOpaque(true);
+		cabecalho.setBounds(0,0,w,60);
+		cabecalho.setBackground(new Color(230,230,230));
+		cabecalho.setForeground(new Color(250,171,75));
+		cabecalho.setFont(new Font("Century Gothic",  Font. PLAIN,  30));
+		cabecalho.setHorizontalAlignment(SwingConstants.LEFT);
+		cabecalho.setVerticalAlignment(SwingConstants.CENTER);
+		
+		Date data = new Date(System.currentTimeMillis());  
+		SimpleDateFormat formatarHour = new SimpleDateFormat("HH"); 
+		int hora = Integer.parseInt(formatarHour.format(data));
+		
+		if(hora < 12){
+		
+			nomeUser = new JLabel("Bom dia "+usuario.getUser());
+		
+		}else if(hora < 18){
+			
+			nomeUser = new JLabel("Boa tarde "+usuario.getUser());
+			
+		}else{
+			
+			nomeUser = new JLabel("Boa noite "+usuario.getUser());
+			
+		}
+		
+		nomeUser.setBounds(50,0,300,60);
+		nomeUser.setBackground(new Color(230,230,230));
+		nomeUser.setForeground(new Color(250,171,75));
+		nomeUser.setFont(new Font("Century Gothic",  Font. PLAIN,  30));
+		nomeUser.setHorizontalAlignment(SwingConstants.LEFT);
+		nomeUser.setVerticalAlignment(SwingConstants.CENTER);
+		
+		this.add(nomeUser);
+		this.add(cabecalho);
+		
+		this.setBackground(new Color(255,255,255));  
+		
+	}
+	
+}

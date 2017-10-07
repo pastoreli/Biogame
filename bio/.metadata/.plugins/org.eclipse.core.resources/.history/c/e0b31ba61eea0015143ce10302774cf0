@@ -1,0 +1,78 @@
+package br.com.etecGuainazes.BioGame.View;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Toolkit;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
+
+public class Login extends JPanel {
+
+	static JTextField txtUser;
+	static JPasswordField txtSenha;
+	static JButton logar;
+//	JLabel form;
+	JLabel lblTitulo;
+	
+	static  int tamanho = (int) Toolkit.getDefaultToolkit ().getScreenSize ().getWidth();
+	static int tamanhoH = (int) Toolkit.getDefaultToolkit ().getScreenSize ().getHeight ();
+	
+	public Login(){
+		
+		this.setLayout(null);
+		
+//		form = new JLabel();
+//		form.setOpaque(true);
+//		form.setBounds((tamanho/2)-250,(tamanhoH/2)-150,500,300);
+//		form.setBackground(new Color(255,239,232));
+		
+		lblTitulo = new JLabel("Entrar");
+		lblTitulo.setBounds((tamanho/2)-250,150,500,300);
+		txtUser.setForeground(new Color(250,171,75));
+		txtUser.setFont(new Font("Helvetica",  Font. PLAIN,  16));
+		
+		txtUser = new JTextField();
+		txtUser.setPreferredSize(txtUser.getPreferredSize());
+		txtUser.setText("");
+		txtUser.setBackground(new Color(240,240,240));
+		txtUser.setForeground(new Color(55, 55, 55));
+		txtUser.setBounds((tamanho/2)-175,(tamanhoH/2)-80,350,25);
+		txtUser.setBorder(new LineBorder(new Color(250,171,75), 2, true));
+		txtUser.setFont(new Font("Helvetica",  Font. PLAIN,  16));
+		txtUser.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		txtSenha = new JPasswordField();
+		txtSenha.setPreferredSize(txtUser.getPreferredSize());
+		txtSenha.setText("");
+		txtSenha.setBackground(new Color(240,240,240));
+		txtSenha.setForeground(new Color(55, 55, 55));
+		txtSenha.setBounds((tamanho/2)-175,(tamanhoH/2)-15,350,25);
+		txtSenha.setBorder(new LineBorder(new Color(250,171,75), 2, true));
+		txtSenha.setFont(new Font("Helvetica",  Font. PLAIN,  16));
+		txtSenha.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		logar = (new JButton("Logar"));
+		logar.setBounds((tamanho/2)-60,(tamanhoH/2)+60,120,50);
+		logar.setBackground(new Color(1,1,1));
+		logar.setForeground(new Color(255, 255, 255));
+		logar.setFont(new Font("Comic Sans Ms",  Font. PLAIN,  14));
+		logar.setBorder(null);
+		logar.setBorderPainted(false);
+//		logar.setContentAreaFilled(false);
+//		logar.setOpaque(false);
+		
+		this.add(txtUser);
+		this.add(txtSenha);
+		this.add(logar);
+		
+		this.setBackground(new Color(245,245,245));  
+		
+	}
+	
+}

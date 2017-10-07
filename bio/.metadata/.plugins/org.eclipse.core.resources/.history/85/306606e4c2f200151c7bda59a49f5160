@@ -1,0 +1,39 @@
+package br.com.etecGuainazes.BioGame.View;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Toolkit;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
+
+public class Sequencia extends JPanel{
+
+	static  int w = (int) Toolkit.getDefaultToolkit ().getScreenSize ().getWidth();
+	static int h = (int) Toolkit.getDefaultToolkit ().getScreenSize ().getHeight ();
+	
+	JLabel campo;
+	
+	public Sequencia(){			
+	
+		this.setLayout(null);
+		
+		campo = (new JLabel("1"));
+		campo.setBounds(100,250,(w/100)*15,(w/100)*15);
+		campo.setBackground(new Color(255,255,255));
+		campo.setForeground(new Color(250,171,75));
+		campo.setFont(new Font("Century Gothic",  Font. PLAIN,  100));
+		campo.setBorder(new LineBorder(new Color(250,171,75), 2, true));
+		campo.setHorizontalAlignment(SwingConstants.CENTER);
+		campo.setVerticalAlignment(SwingConstants.CENTER);
+		
+		this.add(campo);
+		
+		this.setBackground(new Color(255,255,255)); 
+		this.setBounds(w,0,w,h-160);
+	
+	}
+}

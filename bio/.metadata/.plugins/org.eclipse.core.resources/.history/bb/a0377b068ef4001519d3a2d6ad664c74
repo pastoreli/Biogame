@@ -1,0 +1,160 @@
+package br.com.etecGuainazes.BioGame.View;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
+
+import br.com.etecGuainazes.BioGame.Controller.Efeitos;
+import br.com.etecGuainazes.BioGame.Controller.LogicaMemoria;
+import br.com.etecGuainazes.BioGame.Model.Usuario;
+
+public class JogoMemoria extends JPanel{
+
+	LogicaMemoria logica = new LogicaMemoria();
+	
+	static  int w = (int) Toolkit.getDefaultToolkit ().getScreenSize ().getWidth();
+	static int h = (int) Toolkit.getDefaultToolkit ().getScreenSize ().getHeight ();
+	
+	boolean primeroClick = false;
+	
+	//jogo
+	
+	public JButton pecas[];
+	
+	public JogoMemoria(){
+		
+		logica.iniciou = false;
+		primeroClick = false;
+		
+		if(logica.nivel == 1){
+			
+			int centro = ((this.getWidth()-(((this.getWidth()/100)*14)*4))/2)-16;
+			
+			pecas = new JButton [8];
+			
+			for(int i=0; i<pecas.length; i++){
+			
+				pecas[i] = (new JButton(Integer.toString(i)));
+				
+				if(i==0){
+					pecas[i].setBounds(centro,40,(this.getWidth()/100)*14,(this.getWidth()/100)*20);
+				}else if(i<4){
+					pecas[i].setBounds(pecas[i-1].getLocation().x+((this.getWidth()/100)*15)+8,40,(this.getWidth()/100)*14,(this.getWidth()/100)*20);
+				}else if(i==4){
+					pecas[i].setBounds(centro,40+((this.getWidth()/100)*20)+20,(this.getWidth()/100)*14,(this.getWidth()/100)*20);
+				}else{
+					pecas[i].setBounds(pecas[i-1].getLocation().x+((this.getWidth()/100)*15)+8,40+((this.getWidth()/100)*20)+20,(this.getWidth()/100)*14,(this.getWidth()/100)*20);
+				}
+				
+				ImageIcon imgCapa = new ImageIcon("imgM/capa.jpg");
+				
+				pecas[i].setIcon(new ImageIcon(imgCapa.getImage().getScaledInstance(pecas[i].getWidth(),pecas[i].getHeight(), Image.SCALE_DEFAULT)));
+				pecas[i].setFont(new Font("Century Gothic",  Font. PLAIN,  0));
+				pecas[i].setBorder(new LineBorder(new Color(250,171,75), 2, true));
+				pecas[i].setContentAreaFilled(false);
+				pecas[i].setOpaque(false);
+				pecas[i].addActionListener(new ActionListener(){
+
+					public void actionPerformed(ActionEvent e) {
+						
+						logica.numeroB = Integer.parseInt(e.getActionCommand());
+						
+						if(primeroClick == false){
+							
+							primeroClick = true;
+							
+						}
+						
+						logica.start();
+						
+					}
+							
+				});
+				
+				this.add(pecas[i]);
+			
+			}
+			
+		}else if(logica.nivel == 2){
+			
+			int centro = ((this.getWidth()-(((this.getWidth()/100)*14)*5))/2)-40;
+			
+			pecas = new JButton [10];
+			
+			for(int i=0; i<pecas.length; i++){
+			
+				pecas[i] = (new JButton(Integer.toString(i)));
+				
+				if(i==0){
+					pecas[i].setBounds(centro,40,(this.getWidth()/100)*14,(this.getWidth()/100)*20);
+				}else if(i<5){
+					pecas[i].setBounds(pecas[i-1].getLocation().x+((this.getWidth()/100)*15)+8,40,(this.getWidth()/100)*14,(this.getWidth()/100)*20);
+				}else if(i==5){
+					pecas[i].setBounds(centro,40+((this.getWidth()/100)*20)+20,(this.getWidth()/100)*14,(this.getWidth()/100)*20);
+				}else{
+					pecas[i].setBounds(pecas[i-1].getLocation().x+((this.getWidth()/100)*15)+8,40+((this.getWidth()/100)*20)+20,(this.getWidth()/100)*14,(this.getWidth()/100)*20);
+				}
+				
+				pecas[i].setBackground(new Color(230,230,230));
+				pecas[i].setForeground(new Color(250,171,75));
+				pecas[i].setFont(new Font("Century Gothic",  Font. PLAIN,  60));
+				pecas[i].setBorder(new LineBorder(new Color(250,171,75), 2, true));
+				pecas[i].setContentAreaFilled(false);
+				pecas[i].setOpaque(false);
+				
+				this.add(pecas[i]);
+				
+			}
+				
+		}else{
+			
+			int centro = ((this.getWidth()-(((this.getWidth()/100)*14)*6))/2)-48;
+			
+			pecas = new JButton [12];
+			
+			for(int i=0; i<pecas.length; i++){
+			
+				pecas[i] = (new JButton(Integer.toString(i)));
+				
+				if(i==0){
+					pecas[i].setBounds(centro,40,(this.getWidth()/100)*14,(this.getWidth()/100)*20);
+				}else if(i<6){
+					pecas[i].setBounds(pecas[i-1].getLocation().x+((this.getWidth()/100)*15)+8,40,(this.getWidth()/100)*14,(this.getWidth()/100)*20);
+				}else if(i==6){
+					pecas[i].setBounds(centro,40+((this.getWidth()/100)*20)+20,(this.getWidth()/100)*14,(this.getWidth()/100)*20);
+				}else{
+					pecas[i].setBounds(pecas[i-1].getLocation().x+((this.getWidth()/100)*15)+8,40+((this.getWidth()/100)*20)+20,(this.getWidth()/100)*14,(this.getWidth()/100)*20);
+				}
+				
+				pecas[i].setBackground(new Color(230,230,230));
+				pecas[i].setForeground(new Color(250,171,75));
+				pecas[i].setFont(new Font("Century Gothic",  Font. PLAIN,  60));
+				pecas[i].setBorder(new LineBorder(new Color(250,171,75), 2, true));
+				pecas[i].setContentAreaFilled(false);
+				pecas[i].setOpaque(false);
+				
+				this.add(pecas[i]);
+				
+			}
+			
+		}
+		
+		this.setBackground(new Color(255,255,255)); 
+		this.setBounds(0,0,w,h-140);
+		
+	}
+	
+}

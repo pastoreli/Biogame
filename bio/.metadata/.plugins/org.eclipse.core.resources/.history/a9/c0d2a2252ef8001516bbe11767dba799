@@ -1,0 +1,58 @@
+package JMemoria;
+
+import java.awt.*;
+import java.awt.event.*;
+import java.util.*;
+
+import javax.swing.*;
+
+public class Inicial extends JFrame implements ActionListener{
+	
+	JButton jogar;
+	JLabel fundo;
+	JLabel L;
+	
+	public Inicial(){
+		super("Jogo da Memória");
+		setLayout(null);
+		
+		fundo = (new JLabel());
+		fundo.setIcon(new ImageIcon("img/fundo.jpg"));
+		fundo.setBounds(0,0,700,800);
+			 
+		L = (new JLabel("Jogo Da Memoria"));
+		L.setForeground(new Color(239,120,38));
+		L.setBounds(160,50,400,50);
+		L.setFont(new Font("null", Font.BOLD, 40));
+		this.add(L);
+
+		jogar = (new JButton("Jogar"));
+		jogar.addActionListener((ActionListener) this);
+		jogar.setBounds(300,600,100,50);
+		jogar.setBackground(new Color(239,120,38));
+		jogar.setForeground(new Color(0,0,0));
+		jogar.setFont(new Font("null", Font.BOLD, 22));
+		jogar.setBorder(null);
+		jogar.setBorderPainted(false);
+		this.add(jogar);
+		
+		this.add(fundo);
+		
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setResizable(false);     
+        this.setSize(700,800);
+        this.setVisible(true);
+        this.setLocationRelativeTo(null);
+		
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e){
+		if(jogar == e.getSource() ){		
+			new JogoDaMemoria();
+			this.setVisible(false);
+		}else{			
+			System.exit(0);	
+		}	
+	}	
+}

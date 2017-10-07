@@ -1,0 +1,47 @@
+package br.com.etecGuainazes.BioGame.Model;
+
+public class Usuario {
+
+	private String user;
+	private String senha;
+	private String email;
+
+	public String getUser() {
+	
+		return this.user;
+	
+	}
+	
+	public void setUser(String user) {
+	
+		this.user = user;
+	
+	}
+	
+	public String getSenha() {
+	
+		return this.senha;
+	
+	}
+	
+	public void setSenha(String senha) {
+	
+		this.senha = senha;
+	
+	}
+	
+	public String getEmail() {
+		
+		return this.email;
+	
+	}
+
+	public void setEmail(String email) {
+		
+		this.email = email;
+	
+	}
+	
+	
+	
+}

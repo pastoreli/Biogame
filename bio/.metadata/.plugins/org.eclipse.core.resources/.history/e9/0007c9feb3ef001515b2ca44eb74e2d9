@@ -1,0 +1,20 @@
+package br.com.etecGuainazes.BioGame.Controller;
+
+public class Efeitos {
+
+	private String saida;
+	private String entrada;
+	public String getSaida() {
+		return saida;
+	}
+	public void setSaida(String saida) {
+		this.saida = saida;
+	}
+	public String getEntrada() {
+		return entrada;
+	}
+	public void setEntrada(String entrada) {
+		this.entrada = entrada;
+	}
+	
+}

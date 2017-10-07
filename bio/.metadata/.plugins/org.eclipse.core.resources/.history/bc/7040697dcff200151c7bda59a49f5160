@@ -1,0 +1,67 @@
+package br.com.etecGuainazes.BioGame.View;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Toolkit;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
+
+public class Sequencia extends JPanel{
+
+	static  int w = (int) Toolkit.getDefaultToolkit ().getScreenSize ().getWidth();
+	static int h = (int) Toolkit.getDefaultToolkit ().getScreenSize ().getHeight ();
+	
+	JLabel campo[];
+	
+	//itens
+	JPanel itens = new JPanel();
+	
+	public Sequencia(){			
+	
+		this.setLayout(null);
+		this.setBounds(w,0,w+2,h-140);
+		
+		campo = new JLabel[6];
+		int descLbl = 0;
+		
+		for(int i=0; i<6; i++){
+		
+			descLbl++;
+			
+			campo[i] = (new JLabel(Integer.toString(descLbl)));
+			
+			if(i==0){
+				campo[i].setBounds(20,40,(w/100)*14,(w/100)*20);
+			}else if(i<3){
+				campo[i].setBounds(campo[i-1].getLocation().x+((w/100)*15)+8,40,(w/100)*14,(w/100)*20);
+			}else if(i==3){
+				campo[i].setBounds(20,40+((w/100)*20)+20,(w/100)*14,(w/100)*20);
+			}else{
+				campo[i].setBounds(campo[i-1].getLocation().x+((w/100)*15)+8,40+((w/100)*20)+20,(w/100)*14,(w/100)*20);
+			}
+			
+			campo[i].setBackground(new Color(255,255,255));
+			campo[i].setForeground(new Color(250,171,75));
+			campo[i].setFont(new Font("Century Gothic",  Font. PLAIN,  100));
+			campo[i].setBorder(new LineBorder(new Color(250,171,75), 2, true));
+			campo[i].setHorizontalAlignment(SwingConstants.CENTER);
+			campo[i].setVerticalAlignment(SwingConstants.CENTER);
+		
+			this.add(campo[i]);
+			
+		}
+		
+		itens.setLayout(null);
+		itens.setBounds(this.getWidth()-((this.getWidth()/100)*20), 0, (this.getWidth()/100)*20, this.getHeight());
+		itens.setBackground(new Color(0,0,0));
+		itens.setBorder(new LineBorder(new Color(250,171,75), 2, true));
+		
+		this.add(itens);
+		this.setBackground(new Color(0,0,0));
+	
+	}
+}

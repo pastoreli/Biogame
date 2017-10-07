@@ -1,0 +1,381 @@
+package br.com.etecGuainazes.BioGame.Controller;
+
+import java.awt.Toolkit;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import br.com.etecGuainazes.BioGame.View.ControladorFrame;
+import br.com.etecGuainazes.BioGame.View.Home;
+import br.com.etecGuainazes.BioGame.View.JogoMemoria;
+import br.com.etecGuainazes.BioGame.View.Login;
+
+public class Efeitos {
+
+	private int saida;
+	private int entrada;
+	private int escolhaE;
+
+	int delay = 1, delay2 =1;
+	
+	int interval = 10, interval2 = 1;
+	
+	Timer timer = new Timer();
+	
+	static  int w = (int) Toolkit.getDefaultToolkit ().getScreenSize ().getWidth();
+	static int h = (int) Toolkit.getDefaultToolkit ().getScreenSize ().getHeight ();
+	
+	public int getSaida() {
+		
+		return saida;
+	
+	}
+	public void setSaida(int saida) {
+	
+		this.saida = saida;
+	
+	}
+	public int getEntrada() {
+	
+		return entrada;
+	
+	}
+	public void setEntrada(int entrada) {
+	
+		this.entrada = entrada;
+	
+	}
+	
+	public int getEscolhaE() {
+		
+		return escolhaE;
+	
+	}
+	public void setEscolhaE(int escolhaE) {
+	
+		this.escolhaE = escolhaE;
+	
+	}
+	
+	public void transicaoReducao(){
+		
+		timer.scheduleAtFixedRate(new TimerTask(){
+			
+			int reduz = 0, reduz2 = 0;
+			
+			public void run(){
+				
+				if(reduz <= 20){
+				
+					reduz++;
+					reduz2+=2;
+					
+					switch(getSaida()){
+					
+					case 1:
+					
+						ControladorFrame.pLogin.setBounds(reduz, reduz, w-reduz2, (h-40)-reduz2);
+					
+					break;
+					
+					case 2:
+					
+						ControladorFrame.pHome.setBounds(reduz, reduz, w-reduz2, (h-40)-reduz2);
+						
+					break;
+					
+					case 3:
+						
+						ControladorFrame.pMemoria.setBounds(reduz, reduz, w-reduz2, (h-40)-reduz2);
+						
+					break;
+					
+					}
+				
+				}else{
+					
+					cancel();
+					
+					switch(getEscolhaE()){
+					
+					case 1:
+						
+						transicaoTroca();
+						
+					break;
+					
+					case 2:
+						
+						transicaoVolta();
+						
+					break;
+					
+					case 3:
+						
+						transicaoAmpliacao();
+						
+					break;
+					
+					}
+					
+				}
+//				this.setBounds(w+20,20,w-40,h-80);
+//				this.setBounds(0,0,w,h-40);
+				
+				
+			
+			}
+			
+		},delay,interval);
+		
+	}
+	
+	public void transicaoTroca(){
+		
+		ControladorFrame.pHome = new Home();
+		
+		ControladorFrame.telas.add(ControladorFrame.pHome);
+	
+		timer.scheduleAtFixedRate(new TimerTask(){
+			
+			public void run(){
+				
+				if(ControladorFrame.pHome.getLocation().x > 20){
+				
+					switch(getEntrada()){
+					
+					case 1:
+						
+						ControladorFrame.pLogin.setLocation(ControladorFrame.pLogin.getLocation().x-2, ControladorFrame.pLogin.getLocation().y);
+						
+						
+					break;
+					
+					case 2:
+					
+						ControladorFrame.pHome.setLocation(ControladorFrame.pHome.getLocation().x-2, ControladorFrame.pHome.getLocation().y);
+					
+					break;
+					
+					}
+					
+					switch(getSaida()){
+					
+					case 1:
+					
+						ControladorFrame.pLogin.setLocation(ControladorFrame.pLogin.getLocation().x-2, ControladorFrame.pLogin.getLocation().y);
+					
+					break;
+					
+					case 2:
+					
+						ControladorFrame.pHome.setLocation(ControladorFrame.pHome.getLocation().x-2, ControladorFrame.pHome.getLocation().y);
+						
+						
+					break;
+						
+					}
+					
+				}else{
+					
+					switch(getSaida()){
+					
+					case 1:
+					
+						ControladorFrame.pLogin.setVisible(false);
+						ControladorFrame.telas.remove(ControladorFrame.pLogin);
+					
+					break;
+					
+					case 2:
+						
+						ControladorFrame.pHome.setVisible(false);
+						ControladorFrame.telas.remove(ControladorFrame.pHome);
+						
+					break;
+					
+					}
+					
+					cancel();
+					
+					transicaoAmpliacao();
+					
+				}
+			
+			}
+			
+		},delay2,interval2);
+		
+	}
+	
+	public void transicaoVolta(){
+		
+		switch(getEntrada()){
+		
+		case 1:
+			
+			ControladorFrame.pLogin = new Login();
+			ControladorFrame.pLogin.setBounds(-w-20, 20, w-40, h-80);
+			ControladorFrame.telas.add(ControladorFrame.pLogin);
+			
+		break;
+		
+		case 2:
+			
+			ControladorFrame.pHome = new Home();
+			ControladorFrame.pHome.setBounds(-w-20, 20, w-40, h-80);
+			ControladorFrame.telas.add(ControladorFrame.pHome);
+			
+		break;
+		
+		}
+		
+		timer.scheduleAtFixedRate(new TimerTask(){
+			
+			public void run(){
+				
+				if(ControladorFrame.pLogin.getLocation().x < 20){
+				
+					switch(getEntrada()){
+					
+					case 1:
+						
+						ControladorFrame.pLogin.setLocation(ControladorFrame.pLogin.getLocation().x+2, ControladorFrame.pLogin.getLocation().y);
+						
+						
+					break;
+					
+					case 2:
+					
+						ControladorFrame.pHome.setLocation(ControladorFrame.pHome.getLocation().x+2, ControladorFrame.pHome.getLocation().y);
+					
+					break;
+					
+					}
+					
+					switch(getSaida()){
+					
+					case 1:
+					
+						ControladorFrame.pLogin.setLocation(ControladorFrame.pLogin.getLocation().x+2, ControladorFrame.pLogin.getLocation().y);
+					
+					break;
+					
+					case 2:
+					
+						ControladorFrame.pHome.setLocation(ControladorFrame.pHome.getLocation().x+2, ControladorFrame.pHome.getLocation().y);
+						
+						
+					break;
+						
+					}
+					
+				}else{
+					
+					switch(getSaida()){
+					
+					case 1:
+					
+						ControladorFrame.pLogin.setVisible(false);
+						ControladorFrame.telas.remove(ControladorFrame.pLogin);
+					
+					break;
+					
+					case 2:
+						
+						ControladorFrame.pHome.setVisible(false);
+						ControladorFrame.telas.remove(ControladorFrame.pHome);
+						
+					break;
+					
+					}
+					
+					cancel();
+					
+					transicaoAmpliacao();
+					
+				}
+			
+			}
+			
+		},delay2,interval2);
+		
+	}
+	
+public void transicaoAmpliacao(){
+		
+	if(getEscolhaE() == 3){
+	
+		switch(getEntrada()){
+		
+		case 2:
+			
+			ControladorFrame.pMemoria.setVisible(false);
+			ControladorFrame.telas.remove(ControladorFrame.pMemoria);
+			ControladorFrame.pHome = new Home();
+			ControladorFrame.telas.add(ControladorFrame.pHome);
+			
+		break;
+		
+		case 3:
+			
+			ControladorFrame.pHome.setVisible(false);
+			ControladorFrame.telas.remove(ControladorFrame.pHome);
+			ControladorFrame.pMemoria = new JogoMemoria();
+			ControladorFrame.telas.add(ControladorFrame.pMemoria);
+			
+		break;
+		
+		}
+		
+	}
+	
+		timer.scheduleAtFixedRate(new TimerTask(){
+			
+			int reduz = 0, reduz2 = 0;
+			
+			public void run(){
+				
+				if(reduz <= 20){
+				
+					reduz++;
+					reduz2+=2;
+					
+					switch(getEntrada()){
+					
+					case 1:
+					
+						ControladorFrame.pLogin.setBounds(20-reduz, 20-reduz, (w-40)+reduz2, (h-80)+reduz2);
+					
+					break;
+					
+					case 2:
+					
+						ControladorFrame.pHome.setBounds(20-reduz, 20-reduz, (w-40)+reduz2, (h-80)+reduz2);
+						
+					break;
+					
+					case 3:
+						
+						ControladorFrame.pMemoria.setBounds(20-reduz, 20-reduz, (w-40)+reduz2, (h-80)+reduz2);
+						
+					break;
+					
+					}
+					
+				}else{
+					
+					cancel();
+					
+				}
+//				this.setBounds(w+20,20,w-40,h-80);
+//				this.setBounds(0,0,w,h-40);
+				
+				
+			
+			}
+			
+		},delay,interval);
+		
+	}
+	
+}

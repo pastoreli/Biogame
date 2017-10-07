@@ -1,0 +1,65 @@
+package br.com.etecGuainazes.BioGame.View;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Toolkit;
+
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
+
+public class Login extends JPanel {
+
+	static JTextField txtUser;
+	static JPasswordField txtSenha;
+	static JButton logar;
+	
+	static  int tamanho = (int) Toolkit.getDefaultToolkit ().getScreenSize ().getWidth();
+	static int tamanhoH = (int) Toolkit.getDefaultToolkit ().getScreenSize ().getHeight ();
+	
+	public Login(){
+		
+		this.setLayout(null);
+		
+		txtUser = new JTextField();
+		txtUser.setPreferredSize(txtUser.getPreferredSize());
+		txtUser.setText("");
+		txtUser.setBackground(new Color(240,240,240));
+		txtUser.setForeground(new Color(55, 55, 55));
+		txtUser.setBounds((tamanho/2)-175,(tamanhoH/2)-80,350,25);
+		txtUser.setBorder(new LineBorder(new Color(215,215,215), 2, true));
+		txtUser.setFont(new Font("Helvetica",  Font. PLAIN,  16));
+		txtUser.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		txtSenha = new JPasswordField();
+		txtSenha.setPreferredSize(txtUser.getPreferredSize());
+		txtSenha.setText("");
+		txtSenha.setBackground(new Color(240,240,240));
+		txtSenha.setForeground(new Color(55, 55, 55));
+		txtSenha.setBounds((tamanho/2)-175,(tamanhoH/2)-15,350,25);
+		txtSenha.setBorder(new LineBorder(new Color(215,215,215), 2, true));
+		txtSenha.setFont(new Font("Helvetica",  Font. PLAIN,  16));
+		txtSenha.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		logar = (new JButton("Logar"));
+		logar.setBounds((tamanho/2)-20,(tamanhoH/2)+60,120,40);
+		logar.setBackground(new Color(1,1,1));
+		logar.setForeground(new Color(255, 255, 255));
+		logar.setFont(new Font("Helvetica",  Font. PLAIN,  14));
+		logar.setBorder(null);
+		logar.setBorderPainted(false);
+//		logar.setContentAreaFilled(false);
+//		logar.setOpaque(false);
+		
+		this.add(txtUser);
+		this.add(txtSenha);
+		this.add(logar);
+		
+		this.setBackground(new Color(230,230,230));  
+		
+	}
+	
+}

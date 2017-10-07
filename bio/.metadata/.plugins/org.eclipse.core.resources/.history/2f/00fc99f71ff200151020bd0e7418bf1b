@@ -1,0 +1,63 @@
+package br.com.etecGuainazes.BioGame.Controller;
+
+import java.util.Random;
+
+public class LogicaMemoria {
+
+	public static int nivel;
+	
+	public static int numeroB;
+	
+	public static boolean virada;
+	
+	public void nivel1(){
+		
+		String[] imgs = {"imgR/1.jpg", "imgR/2.jpg", "imgR/3.jpg", "imgR/4.jpg", "imgR/1.jpg", "imgR/2.jpg", "imgR/3.jpg", "imgR/4.jpg"};
+		
+		Boolean[] verifica = {false, false, false, false, false, false, false, false};
+		
+		String imgB[] = new String[8];
+		
+		Random espalhar = new Random();
+		
+		int roda=0;
+		
+		while(roda<8){
+		
+			int roleta = espalhar.nextInt(7);
+			
+			int valida=0;
+			
+			for(int i=0; i<8; i++){
+			
+				if(i == roda){
+					
+					imgB[i] = imgs[roleta];
+					roda++;
+					break;
+					
+				}
+				
+				if(imgB[i].equals(imgs[roleta])){
+					
+					if(valida != 2){
+						
+						valida++;
+						
+					}else{
+						
+						break;
+						
+					}
+					
+				}
+				
+			}
+		
+		}
+		
+		
+		
+	}
+	
+}

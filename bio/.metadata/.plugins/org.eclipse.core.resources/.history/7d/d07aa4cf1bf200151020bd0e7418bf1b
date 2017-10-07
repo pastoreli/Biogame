@@ -1,0 +1,17 @@
+package br.com.etecGuainazes.BioGame.Controller;
+
+public class LogicaMemoria {
+
+	public static int nivel;
+	
+	public static int numeroB;
+	
+	public void nivel1(){
+		
+		String[] imgs = { "imgR/1.jpg", "imgR/2.jpg", "imgR/3.jpg", "imgR/4.jpg" };
+		
+		
+		
+	}
+	
+}

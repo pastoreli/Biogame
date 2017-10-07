@@ -1,0 +1,21 @@
+package br.com.etecGuainazes.BioGame.View;
+
+import java.awt.Color;
+import java.awt.Toolkit;
+
+import javax.swing.JPanel;
+
+public class Sequencia extends JPanel{
+
+	static  int w = (int) Toolkit.getDefaultToolkit ().getScreenSize ().getWidth();
+	static int h = (int) Toolkit.getDefaultToolkit ().getScreenSize ().getHeight ();
+	
+	public Sequencia(){			
+	
+		this.setLayout(null);
+		
+		this.setBackground(new Color(255,255,255)); 
+		this.setBounds(0,0,w,h-100);
+	
+	}
+}

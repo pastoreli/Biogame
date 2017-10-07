@@ -1,0 +1,77 @@
+package br.com.etecGuainazes.BioGame.Controller;
+
+import java.awt.Toolkit;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import br.com.etecGuainazes.BioGame.View.ControladorFrame;
+import br.com.etecGuainazes.BioGame.View.Login;
+
+public class Efeitos {
+
+	private String saida;
+	private String entrada;
+	
+	int delay = 1;
+	
+	int interval = 20;
+	
+	Timer timer = new Timer();
+	
+	static  int w = (int) Toolkit.getDefaultToolkit ().getScreenSize ().getWidth();
+	static int h = (int) Toolkit.getDefaultToolkit ().getScreenSize ().getHeight ();
+	
+	public String getSaida() {
+		
+		return saida;
+	
+	}
+	public void setSaida(String saida) {
+	
+		this.saida = saida;
+	
+	}
+	public String getEntrada() {
+	
+		return entrada;
+	
+	}
+	public void setEntrada(String entrada) {
+	
+		this.entrada = entrada;
+	
+	}
+	
+	public void transicao(){
+		
+		timer.scheduleAtFixedRate(new TimerTask(){
+			
+			int reduz = 0, reduz2 = 0;
+			
+			public void run(){
+				
+				if(reduz <= 20){
+				
+					reduz++;
+					reduz2+=2;
+					
+					ControladorFrame.pLogin.setBounds(reduz, reduz, w-reduz2, (h-40)-reduz2);
+				
+				}else{
+					
+					cancel();
+					
+				}
+				
+//				this.setBounds(w+20,20,w-40,h-80);
+//				this.setBounds(0,0,w,h-40);
+				
+				
+			
+			}
+			
+		},delay,interval);
+		
+	}
+	
+}

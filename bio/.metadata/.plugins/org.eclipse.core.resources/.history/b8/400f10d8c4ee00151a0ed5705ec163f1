@@ -1,0 +1,164 @@
+package br.com.etecGuainazes.BioGame.Controller;
+
+import br.com.etecGuainazes.BioGame.Model.Cards;
+import br.com.etecGuainazes.BioGame.Model.Conexao;
+import br.com.etecGuainazes.BioGame.Model.Usuario;
+import br.com.etecGuainazes.BioGame.View.Login;
+
+import java.awt.CardLayout;
+import java.awt.Color;
+import java.awt.Toolkit;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Timer;
+import java.util.TimerTask;
+
+public class IniciarSessao {
+
+	Usuario usuario;
+	
+	Cards c = new Cards();
+	
+	private String senha;
+	
+	int delay = (int) 0.5;
+	
+	int interval = 5;
+	
+	Timer timer = new Timer();
+	
+	static  int w = (int) Toolkit.getDefaultToolkit ().getScreenSize ().getWidth();
+	static int h = (int) Toolkit.getDefaultToolkit ().getScreenSize ().getHeight ();
+	
+	int reduz = 0;
+	
+	private Connection conn = new Conexao().getConexao();
+	
+	private String sql = null;
+	
+	public void cadastrar() {
+		
+		try{
+			
+			sql = "SELECT nomeUsuario FROM tbUsuario WHERE nomeUsuario = '"+usuario.getUser()+"'";
+		
+			Statement stm = conn.createStatement();
+			
+			ResultSet rs = stm.executeQuery(sql);	
+			
+			if(rs.next()){
+				
+				System.out.println("Já existe!");
+				
+			}else{
+				
+				String sql2 = "SELECT * FROM tbUsuario";
+				
+				sql2 = "INSERT INTO tbUsuario(nomeUsuario, senhaUsuario	, emailUsuario)" + "VALUES ('"+usuario.getUser()+"' , '"+Senha(senha)+"' , '"+usuario.getEmail()+"')";
+				
+				Statement st2 = conn.createStatement();
+				st2.execute(sql2);	
+		
+				
+			}
+			
+		}catch(Exception e){
+			
+			System.out.println(e.getMessage());
+			
+		}
+		
+	}
+	
+	public void Logar(){
+		
+		try{
+			
+			sql = "SELECT nomeUsuario, senhaUsuario FROM tbUsuario WHERE nomeUsuario = '"+usuario.getUser()+"'";
+			
+			Statement stm = conn.createStatement();
+			
+			ResultSet rs = stm.executeQuery(sql);	
+			
+			if(rs.next()){
+				
+				if(rs.getString("senhaUsuario").equals(Senha(senha))){
+					
+					c.setCl((CardLayout) (c.getCards().getLayout()));
+				    c.getCl().show(c.getCards(), "home"); 
+					
+				}else{
+					
+					timer();
+					
+				}
+				
+			}else{
+				
+				timer();
+				
+			}
+			
+		}catch(Exception e){
+			
+			System.out.println(e.getMessage());
+			
+		}
+		
+	}
+	
+	//criptogravação de senha
+	public String Senha(String senha) throws NoSuchAlgorithmException, UnsupportedEncodingException{
+		
+		MessageDigest algorithm = MessageDigest.getInstance("SHA-256");
+		
+		byte messageDigest[] = algorithm.digest(usuario.getSenha().getBytes("UTF-8"));
+		 
+		StringBuilder hexString = new StringBuilder();
+		
+		for (byte b : messageDigest) {
+		
+			hexString.append(String.format("%02X", 0xFF & b));
+		
+		}
+		 
+		senha = hexString.toString();
+		
+		return senha;
+		
+	}
+
+	public void timer(){
+		
+		timer.scheduleAtFixedRate(new TimerTask(){
+			
+			int c = 0;
+			
+			public void run(){
+				
+				if(reduz <= 200){
+				
+				reduz++;
+				
+				Login.caixa.setBounds(0,h-reduz,w,200);
+					
+				}else{
+					
+					cancel();
+					
+				}
+				
+			
+			}
+			
+		},delay,interval);
+		
+	}
+	
+}

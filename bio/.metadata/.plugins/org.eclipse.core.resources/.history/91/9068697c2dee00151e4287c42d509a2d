@@ -1,0 +1,544 @@
+package br.com.etecGuainazes.BioGame.View;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
+
+import br.com.etecGuainazes.BioGame.Controller.IniciarSessao;
+import br.com.etecGuainazes.BioGame.Model.Usuario;
+
+public class Login extends JPanel {
+
+	JLabel cabecalho;
+	
+	// logar
+	
+	JTextField txtUser;
+	JPasswordField txtSenha;
+	JButton logar;
+	JLabel texto;
+	JLabel faixaUser, faixaSenha;
+	
+	//cadastro
+	
+	JLabel textoCad;
+	JTextField txtUserCad, txtMail;
+	JPasswordField txtSenhaCad;
+	JLabel faixaUserCad,  faixaMail, faixaSenhaCad;
+	JButton cadastrar;
+	
+	//popUp
+	
+	JPanel caixa;
+	
+	JLabel erro, desc;
+	
+	static  int w = (int) Toolkit.getDefaultToolkit ().getScreenSize ().getWidth();
+	static int h = (int) Toolkit.getDefaultToolkit ().getScreenSize ().getHeight ();
+	
+	Usuario usuario = new Usuario();
+	IniciarSessao sessao = new IniciarSessao();
+	
+	public Login(){
+		
+		this.setLayout(null);
+		
+		cabecalho = new JLabel("Bem-vindo");
+		cabecalho.setOpaque(true);
+		cabecalho.setBounds(0,0,w,60);
+		cabecalho.setBackground(new Color(230,230,230));
+		cabecalho.setForeground(new Color(250,171,75));
+		cabecalho.setFont(new Font("Century Gothic",  Font. PLAIN,  42));
+		cabecalho.setHorizontalAlignment(SwingConstants.CENTER);
+		cabecalho.setVerticalAlignment(SwingConstants.CENTER);
+		
+		//logar
+		
+		texto = new JLabel("Entre");
+		texto.setBounds(150,150,350,70);
+		texto.setForeground(new Color(200,200,200));
+		texto.setFont(new Font("Century Gothic",  Font. PLAIN,  60));
+		texto.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		txtUser = new JTextField("Nome de usuário");
+		txtUser.setPreferredSize(txtUser.getPreferredSize());
+		txtUser.setBackground(new Color(245,245,245));
+		txtUser.setForeground(new Color(205,205,205));
+		txtUser.setBounds(150,(h/2)-80,350,30);
+		txtUser.setBorder(null);
+		txtUser.setFont(new Font("Century Gothic",  Font. PLAIN,  20));
+		txtUser.setHorizontalAlignment(SwingConstants.CENTER);
+		txtUser.addFocusListener(new FocusListener() {  
+
+			@Override
+			public void focusGained(FocusEvent arg0) {
+				
+				if(txtUser.getText().equals("Nome de usuário")){
+					
+					txtUser.setText("");
+					
+				}
+	
+				faixaUser.setBackground(new Color(250,171,75));
+				txtUser.setForeground(new Color(250,171,75));
+				
+				
+			}
+
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				
+				if(txtUser.getText().equals("")){
+					
+					txtUser.setText("Nome de usuário");
+					txtUser.setForeground(new Color(205,205,205));
+					
+				}else{
+				
+					if(txtUser.getText().length() < 4){
+						
+						txtUser.setForeground(new Color(221,26,70));
+						
+					}else{
+					
+						txtUser.setForeground(new Color(200,200,200));
+					
+					}
+				
+				}
+				
+				faixaUser.setBackground(new Color(200,200,200));
+				
+			}  
+  
+			});
+		
+//		txtUser.addKeyListener(new KeyListener(){
+//
+//			@Override
+//			public void keyPressed(KeyEvent e) {
+//			}
+//			public void keyReleased(KeyEvent e) {
+//			}
+//			public void keyTyped(KeyEvent e) {
+//			}
+//
+//		});
+		
+		faixaUser = new JLabel();
+		faixaUser.setOpaque(true);
+		faixaUser.setBounds(150,(h/2)-50,350,3);
+		faixaUser.setBackground(new Color(200,200,200));
+		
+		
+		
+		txtSenha = new JPasswordField("Senha");
+		txtSenha.setPreferredSize(txtUser.getPreferredSize());
+		txtSenha.setBackground(new Color(245,245,245));
+		txtSenha.setForeground(new Color(200,200,200));
+		txtSenha.setBounds(150,(h/2)-15,350,30);
+		txtSenha.setBorder(null);
+		txtSenha.setFont(new Font("Century Gothic",  Font. PLAIN,  20));
+		txtSenha.setHorizontalAlignment(SwingConstants.CENTER);
+		txtSenha.setEchoChar((char) 0);
+		txtSenha.addFocusListener(new FocusListener() {  
+
+			@Override
+			public void focusGained(FocusEvent arg0) {
+				
+				if(txtSenha.getText().equals("Senha")){
+					
+					txtSenha.setText("");
+					txtSenha.setEchoChar('*');
+					
+				}
+				
+				faixaSenha.setBackground(new Color(250,171,75));
+				txtSenha.setForeground(new Color(250,171,75));
+				
+			}
+
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				
+				if(txtSenha.getText().equals("")){
+					
+					txtSenha.setEchoChar((char) 0);
+					txtSenha.setText("Senha");
+					txtSenha.setForeground(new Color(205,205,205));
+					
+				}else{
+					
+					if(txtSenha.getText().length() < 6){
+						
+						txtSenha.setForeground(new Color(221,26,70));
+						
+					}else{
+					
+						txtSenha.setForeground(new Color(200,200,200));
+					
+					}
+					
+				}
+				
+				faixaSenha.setBackground(new Color(200,200,200));
+				
+			}  
+  
+			});
+		
+		faixaSenha = new JLabel();
+		faixaSenha.setOpaque(true);
+		faixaSenha.setBounds(150,(h/2)+15,350,3);
+		faixaSenha.setBackground(new Color(200,200,200));
+		
+		logar = (new JButton("Logar"));
+		logar.setBounds(260,(h/2)+65,130,40);
+		logar.setBackground(new Color(250,171,75));
+		logar.setForeground(new Color(230, 230, 230));
+		logar.setFont(new Font("Century Gothic",  Font. PLAIN,  18));
+		logar.setBorder(null);
+		logar.setBorderPainted(false);
+		logar.addMouseListener(new MouseAdapter() {
+			 @Override
+			 public void mouseEntered(MouseEvent e) {
+				 
+				 logar.setBackground(new Color(245,138,5));
+				 
+			 }
+			 @Override
+			 public void mouseExited(MouseEvent e) {
+				 
+				 logar.setBackground(new Color(250,171,75));
+				 
+			}
+		});
+		logar.addActionListener(new ActionListener(){
+
+			public void actionPerformed(ActionEvent e) {
+				
+				if(txtUser.getText() != "Nome de usuário" && txtUser.getForeground().equals(new Color(200,200,200)) && txtSenha.getText() != "Senha" && txtSenha.getForeground().equals(new Color(200,200,200))){
+					
+					usuario.setUser(txtUser.getText());
+					usuario.setSenha(txtSenha.getText());
+					
+					sessao.Logar();
+					
+				}
+				
+			}
+			
+					
+		});
+	
+		//cadastro
+		
+		textoCad = new JLabel("Cadastre-se");
+		textoCad.setBounds((w-370)-150,150,370,70);
+		textoCad.setForeground(new Color(200,200,200));
+		textoCad.setFont(new Font("Century Gothic",  Font. PLAIN,  60));
+		textoCad.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		txtUserCad = new JTextField("Nome de usuário");
+		txtUserCad.setPreferredSize(txtUser.getPreferredSize());
+		txtUserCad.setBackground(new Color(245,245,245));
+		txtUserCad.setForeground(new Color(205,205,205));
+		txtUserCad.setBounds((w-350)-150,(h/2)-80,350,30);
+		txtUserCad.setBorder(null);
+		txtUserCad.setFont(new Font("Century Gothic",  Font. PLAIN,  20));
+		txtUserCad.setHorizontalAlignment(SwingConstants.CENTER);
+		txtUserCad.addFocusListener(new FocusListener() {  
+
+			@Override
+			public void focusGained(FocusEvent arg0) {
+				
+				if(txtUserCad.getText().equals("Nome de usuário")){
+					
+					txtUserCad.setText("");
+					
+				}
+	
+				faixaUserCad.setBackground(new Color(250,171,75));
+				txtUserCad.setForeground(new Color(250,171,75));
+				
+				
+			}
+
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				
+				if(txtUserCad.getText().equals("")){
+					
+					txtUserCad.setText("Nome de usuário");
+					txtUserCad.setForeground(new Color(205,205,205));
+					
+				}else{
+				
+					if(txtUserCad.getText().length() < 4){
+						
+						txtUserCad.setForeground(new Color(221,26,70));
+						
+					}else{
+					
+						txtUserCad.setForeground(new Color(200,200,200));
+					
+					}
+				
+				}
+				
+				faixaUserCad.setBackground(new Color(200,200,200));
+				
+			}  
+  
+			});
+		
+		faixaUserCad = new JLabel();
+		faixaUserCad.setOpaque(true);
+		faixaUserCad.setBounds((w-350)-150,(h/2)-50,350,3);
+		faixaUserCad.setBackground(new Color(200,200,200));
+		
+		txtSenhaCad = new JPasswordField("Senha");
+		txtSenhaCad.setPreferredSize(txtUser.getPreferredSize());
+		txtSenhaCad.setBackground(new Color(245,245,245));
+		txtSenhaCad.setForeground(new Color(200,200,200));
+		txtSenhaCad.setBounds((w-350)-150,(h/2)-15,350,30);
+		txtSenhaCad.setBorder(null);
+		txtSenhaCad.setFont(new Font("Century Gothic",  Font. PLAIN,  20));
+		txtSenhaCad.setHorizontalAlignment(SwingConstants.CENTER);
+		txtSenhaCad.setEchoChar((char) 0);
+		txtSenhaCad.addFocusListener(new FocusListener() {  
+
+			@Override
+			public void focusGained(FocusEvent arg0) {
+				
+				if(txtSenhaCad.getText().equals("Senha")){
+					
+					txtSenhaCad.setText("");
+					txtSenhaCad.setEchoChar('*');
+					
+				}
+				
+				faixaSenhaCad.setBackground(new Color(250,171,75));
+				txtSenhaCad.setForeground(new Color(250,171,75));
+				
+			}
+
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				
+				if(txtSenhaCad.getText().equals("")){
+					
+					txtSenhaCad.setEchoChar((char) 0);
+					txtSenhaCad.setText("Senha");
+					txtSenhaCad.setForeground(new Color(205,205,205));
+					
+				}else{
+					
+					if(txtSenhaCad.getText().length() < 6){
+						
+						txtSenhaCad.setForeground(new Color(221,26,70));
+						
+					}else{
+					
+						txtSenhaCad.setForeground(new Color(200,200,200));
+					
+					}
+					
+				}
+				
+				faixaSenhaCad.setBackground(new Color(200,200,200));
+				
+			}  
+  
+			});
+		
+		faixaSenhaCad = new JLabel();
+		faixaSenhaCad.setOpaque(true);
+		faixaSenhaCad.setBounds((w-350)-150,(h/2)+15,350,3);
+		faixaSenhaCad.setBackground(new Color(200,200,200));
+		
+		txtMail = new JTextField("Email");
+		txtMail.setPreferredSize(txtMail.getPreferredSize());
+		txtMail.setBackground(new Color(245,245,245));
+		txtMail.setForeground(new Color(205,205,205));
+		txtMail.setBounds((w-350)-150,(h/2)+50,350,30);
+		txtMail.setBorder(null);
+		txtMail.setFont(new Font("Century Gothic",  Font. PLAIN,  20));
+		txtMail.setHorizontalAlignment(SwingConstants.CENTER);
+		txtMail.addFocusListener(new FocusListener() {  
+
+			@Override
+			public void focusGained(FocusEvent arg0) {
+				
+				if(txtMail.getText().equals("Email")){
+					
+					txtMail.setText("");
+					
+				}
+	
+				faixaMail.setBackground(new Color(250,171,75));
+				txtMail.setForeground(new Color(250,171,75));
+				
+				
+			}
+
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				
+				if(txtMail.getText().equals("")){
+					
+					txtMail.setText("Email");
+					txtMail.setForeground(new Color(205,205,205));
+					
+				}else{
+				
+					char[] valida = txtMail.getText().toCharArray();
+					
+					for(int i=0; i<valida.length; i++){
+						
+						if(valida[i] == '@'){
+							
+							txtMail.setForeground(new Color(200,200,200));
+							break;
+							
+						}else{
+							
+							txtMail.setForeground(new Color(221,26,70));
+							
+						}
+						
+					}
+				
+				}
+				
+				faixaMail.setBackground(new Color(200,200,200));
+				
+			}  
+  
+			});
+		
+//		txtUser.addKeyListener(new KeyListener(){
+//
+//			@Override
+//			public void keyPressed(KeyEvent e) {
+//			}
+//			public void keyReleased(KeyEvent e) {
+//			}
+//			public void keyTyped(KeyEvent e) {
+//			}
+//
+//		});
+		
+		faixaMail = new JLabel();
+		faixaMail.setOpaque(true);
+		faixaMail.setBounds((w-350)-150,(h/2)+80,350,3);
+		faixaMail.setBackground(new Color(200,200,200));
+		
+		cadastrar = (new JButton("Cadastrar"));
+		cadastrar.setBounds((w-130)-260,(h/2)+120,130,40);
+		cadastrar.setBackground(new Color(250,171,75));
+		cadastrar.setForeground(new Color(230, 230, 230));
+		cadastrar.setFont(new Font("Century Gothic",  Font. PLAIN,  18));
+		cadastrar.setBorder(null);
+		cadastrar.setBorderPainted(false);
+		cadastrar.addMouseListener(new MouseAdapter() {
+			 @Override
+			 public void mouseEntered(MouseEvent e) {
+				 
+				 cadastrar.setBackground(new Color(245,138,5));
+				 
+			 }
+			 @Override
+			 public void mouseExited(MouseEvent e) {
+				 
+				 cadastrar.setBackground(new Color(250,171,75));
+				 
+			}
+		});
+		cadastrar.addActionListener(new ActionListener(){
+
+			public void actionPerformed(ActionEvent e) {
+				
+				if(txtUserCad.getText() != "Nome de usuário" && txtUserCad.getForeground().equals(new Color(200,200,200)) && txtSenhaCad.getText() != "Senha" && txtSenhaCad.getForeground().equals(new Color(200,200,200)) && txtMail.getText() != "Email" && txtMail.getForeground().equals(new Color(200,200,200))){
+					
+					usuario.setUser(txtUserCad.getText());
+					usuario.setSenha(txtSenhaCad.getText());
+					usuario.setEmail(txtMail.getText());
+					
+					sessao.cadastrar();
+					
+				}
+				
+			}
+			
+					
+		});
+		
+		//popUp
+		
+//		public void setComponentZOrder(caixa comp,int 200);
+		
+		caixa = new JPanel(null);
+		caixa.setBounds(0,h,w,200);
+		caixa.setBackground(new Color(250,171,75));
+		caixa.setOpaque(true);
+		
+		erro = new JLabel("Erro");
+		erro.setBounds(0,20,w,40);
+		erro.setForeground(new Color(255,255,255));
+		erro.setFont(new Font("Century Gothic",  Font. PLAIN,  40));
+		erro.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		desc = new JLabel("Nome de usuário ou senha invalidos");
+		desc.setBounds(0,80,w,30);
+		desc.setForeground(new Color(255,255,255));
+		desc.setFont(new Font("Century Gothic",  Font. PLAIN,  26));
+		desc.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		caixa.add(desc);
+		caixa.add(erro);
+		this.add(caixa);
+		
+		//logar
+		this.add(texto);
+		this.add(txtUser);
+		this.add(faixaUser);
+		this.add(txtSenha);
+		this.add(faixaSenha);
+		this.add(logar);
+		
+		//cadastro
+		
+		this.add(textoCad);
+		this.add(txtUserCad);
+		this.add(faixaUserCad);
+		this.add(txtSenhaCad);
+		this.add(faixaSenhaCad);
+		this.add(txtMail);
+		this.add(faixaMail);
+		this.add(cadastrar);
+		
+		this.add(cabecalho);
+		
+		this.setBackground(new Color(245,245,245));  
+		
+	}
+	
+}
